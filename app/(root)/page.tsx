@@ -6,6 +6,7 @@ const Home = () => {
     return (
         <>
             <div className="flex home-wrapper  min-h-screen">
+                
                 <section className="grid gap-8 home-section w-full">
                     <div className="md:col-span-1 xl:col-span-1">
                         <TradingViewWidget 

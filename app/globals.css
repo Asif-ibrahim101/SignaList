@@ -422,22 +422,7 @@
 }
 
 .tradingview-widget-copyright {
-    font-size: 11px;
-    color: #9ca3af;
-    text-align: center;
-    padding: 4px 0;
-    background-color: transparent;
-}
-
-.tradingview-widget-copyright a {
-    color: #60a5fa;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.tradingview-widget-copyright a:hover {
-    color: #93c5fd;
-    text-decoration: underline;
+    display: none !important;
 }
 
 .tv-embed-widget-wrapper .tv-embed-widget-wrapper__body {
@@ -486,4 +471,26 @@
 
 .scrollbar-hide-default::-webkit-scrollbar-thumb:hover {
     background-color: #9095A1;
+}
+
+/* Ticker Tape Widget Styles */
+.ticker-tape-container {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.ticker-tape-container .tradingview-widget-container {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+}
+
+.ticker-tape-container .tradingview-widget-container__widget {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
