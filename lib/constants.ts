@@ -114,6 +114,50 @@ export const HEATMAP_WIDGET_CONFIG = {
     height: '600',
 };
 
+export const CRYPTO_HEATMAP_WIDGET_CONFIG = {
+    dataSource: 'Crypto',
+    blockSize: 'market_cap_calc',
+    blockColor: '24h_close_change|5',
+    locale: 'en',
+    symbolUrl: '',
+    colorTheme: 'dark',
+    hasTopBar: false,
+    isDataSetEnabled: false,
+    isZoomEnabled: true,
+    hasSymbolTooltip: true,
+    isMonoSize: false,
+    width: '100%',
+    height: '600',
+};
+
+export const ETF_HEATMAP_WIDGET_CONFIG = {
+    colorTheme: 'dark',
+    isTransparent: true,
+    locale: 'en',
+    width: '100%',
+    height: '600',
+};
+
+export const FOREX_HEATMAP_WIDGET_CONFIG = {
+    colorTheme: 'dark',
+    isTransparent: false,
+    locale: 'en',
+    currencies: [
+        'EUR',
+        'USD',
+        'JPY',
+        'GBP',
+        'CHF',
+        'AUD',
+        'CAD',
+        'NZD',
+        'CNY',
+    ],
+    backgroundColor: '#141414',
+    width: '100%',
+    height: '600',
+};
+
 export const TOP_STORIES_WIDGET_CONFIG = {
     displayMode: 'regular',
     feedMode: 'market',
@@ -168,6 +212,15 @@ export const MARKET_DATA_WIDGET_CONFIG = {
             ],
         },
     ],
+};
+
+export const HOTLISTS_WIDGET_CONFIG = {
+    colorTheme: 'dark',
+    isTransparent: true,
+    locale: 'en',
+    showSymbolLogo: true,
+    width: '100%',
+    height: 600,
 };
 
 export const SYMBOL_INFO_WIDGET_CONFIG = (symbol: string) => ({

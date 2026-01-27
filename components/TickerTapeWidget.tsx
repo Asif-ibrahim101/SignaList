@@ -1,15 +1,14 @@
 'use client'
 
 import React, { useEffect, useRef, memo } from 'react';
+import { useTheme } from '@/components/ThemeProvider';
 
 function TickerTapeWidget() {
   const container = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!container.current) return;
-    
-    // Check if already loaded
-    if (container.current.dataset.loaded) return;
 
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
@@ -38,7 +37,7 @@ function TickerTapeWidget() {
           "title": "Ethereum"
         }
       ],
-      "colorTheme": "dark",
+      "colorTheme": theme,
       "locale": "en",
       "largeChartUrl": "",
       "isTransparent": false,
@@ -47,16 +46,16 @@ function TickerTapeWidget() {
     });
 
     container.current.appendChild(script);
-    container.current.dataset.loaded = "true";
 
     return () => {
       if (container.current) {
         const scripts = container.current.querySelectorAll('script');
         scripts.forEach(s => s.remove());
-        delete container.current.dataset.loaded;
+        const widget = container.current.querySelector('.tradingview-widget-container__widget');
+        if (widget) widget.innerHTML = '';
       }
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div className="tradingview-widget-container w-full" ref={container}>
@@ -66,4 +65,3 @@ function TickerTapeWidget() {
 }
 
 export default memo(TickerTapeWidget);
-
