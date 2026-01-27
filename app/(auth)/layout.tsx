@@ -17,14 +17,14 @@ const Layout = ({children} : {children: React.ReactNode}) => {
 
             <div className="auth-right-section">
                 <div className="z-10 relative lg:mt-4 lg:mb-16">
-                    <blockquote className="auth-blockquote text-gray-300">
+                    <blockquote className="auth-blockquote text-foreground">
                         Signalist turned my watchlist into a winning list. The alerts are spot-on, and I feel more confident making moves in the market
                     </blockquote>
 
                     <div className="flex items-center gap-2">
                         <div className="">
                             <cite className="auth-testimonial-author">John Doe</cite>
-                            <p className="max-md:text-xs text-gray-500">CEO of ABC Inc.</p>
+                            <p className="max-md:text-xs text-muted-foreground">CEO of ABC Inc.</p>
                         </div>
                     </div>
 

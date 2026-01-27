@@ -9,9 +9,11 @@ import FooterLink from '@/components/Forms/FooterLinks';
 // import {toast} from "sonner";
 // import {signInEmail} from "better-auth/api";
 import {useRouter} from "next/navigation";
+import { useState } from "react";
 
 const SignIn = () => {
     const router = useRouter()
+    const [formError, setFormError] = useState('');
     const {
         register,
         handleSubmit,
@@ -25,15 +27,21 @@ const SignIn = () => {
     });
 
     const onSubmit = async (data: SignInFormData) => {
-        // try {
-        //     const result = await signInWithEmail(data);
-        //     if(result.success) router.push('/');
-        // } catch (e) {
-        //     console.error(e);
-        //     toast.error('Sign in failed', {
-        //         description: e instanceof Error ? e.message : 'Failed to sign in.'
-        //     })
-        // }
+        setFormError('');
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result?.error || 'Sign in failed.');
+            }
+            router.push('/');
+        } catch (e) {
+            setFormError(e instanceof Error ? e.message : 'Failed to sign in.');
+        }
     }
 
     return (
@@ -63,6 +71,7 @@ const SignIn = () => {
                 <Button type="submit" disabled={isSubmitting} className="yellow-btn w-full mt-5">
                     {isSubmitting ? 'Signing In' : 'Sign In'}
                 </Button>
+                {formError && <p className="text-sm text-red-500">{formError}</p>}
 
                 <FooterLink text="Don't have an account?" linkText="Create an account" href="/sign-up" />
             </form>

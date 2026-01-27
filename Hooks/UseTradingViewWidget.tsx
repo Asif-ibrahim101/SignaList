@@ -6,12 +6,14 @@ const UseTradingViewWidget = (scriptUrl: string, config: Record<string, unknown>
 
     useEffect(() => {
         if(!containerRef.current) return;
-        if(containerRef.current.dataset.loaded) return;
         
         // Find the widget container div (the one with class "tradingview-widget-container__widget")
         const widgetContainer = containerRef.current.querySelector('.tradingview-widget-container__widget');
         if(!widgetContainer) return;
         
+        // Reset container so switching configs/scripts re-initializes cleanly
+        widgetContainer.innerHTML = "";
+
         // Create and configure the script
         const script = document.createElement("script");
         script.src = scriptUrl;
@@ -21,7 +23,6 @@ const UseTradingViewWidget = (scriptUrl: string, config: Record<string, unknown>
         
         // Append script to the widget container (TradingView script will render into this container)
         widgetContainer.appendChild(script);
-        containerRef.current.dataset.loaded = "true";
 
         return () => {
             const current = containerRef.current;
@@ -33,7 +34,6 @@ const UseTradingViewWidget = (scriptUrl: string, config: Record<string, unknown>
                     scripts.forEach(s => s.remove());
                     widget.innerHTML = "";
                 }
-                delete current.dataset.loaded;
             }
         }
 

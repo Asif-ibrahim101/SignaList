@@ -72,10 +72,10 @@ const CountrySelect = ({
                 </Button>
             </PopoverTrigger>
             <PopoverContent
-                className='w-full p-0 bg-gray-800 border-gray-600'
+                className='w-full p-0 bg-card border-border'
                 align='start'
             >
-                <Command className='bg-gray-800 border-gray-600'>
+                <Command className='bg-card border-border'>
                     <CommandInput
                         placeholder='Search countries...'
                         className='country-select-input'
@@ -83,8 +83,8 @@ const CountrySelect = ({
                     <CommandEmpty className='country-select-empty'>
                         No country found.
                     </CommandEmpty>
-                    <CommandList className='max-h-60 bg-gray-800 scrollbar-hide-default'>
-                        <CommandGroup className='bg-gray-800'>
+                    <CommandList className='max-h-60 bg-card scrollbar-hide-default'>
+                        <CommandGroup className='bg-card'>
                             {countries.map((country) => (
                                 <CommandItem
                                     key={country.value}
@@ -138,7 +138,7 @@ export const CountrySelectField = ({
                 )}
             />
             {error && <p className='text-sm text-red-500'>{error.message}</p>}
-            <p className='text-xs text-gray-500'>
+            <p className='text-xs text-muted-foreground'>
                 Helps us show market data and news relevant to you.
             </p>
         </div>

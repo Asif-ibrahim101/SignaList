@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import NavItems from "@/components/NavItems";
 import UserDropdown from "@/components/UserDropdown";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Header = () => {
     return (
@@ -16,7 +17,10 @@ const Header = () => {
                         <NavItems />
                     </nav>
 
-                    <UserDropdown />
+                    <div className="flex items-center gap-3">
+                        <ThemeToggle />
+                        <UserDropdown />
+                    </div>
                 </div>
             </header>
         </>
