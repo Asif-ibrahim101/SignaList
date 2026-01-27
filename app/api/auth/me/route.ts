@@ -1,22 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectToDatabase } from '@/Database/Mongoose';
-import Session from '@/models/Session';
-import User from '@/models/User';
+import { getUserFromSession } from '@/lib/session';
 
 export async function GET(request: NextRequest) {
-  await connectToDatabase();
-
   const token = request.cookies.get('session')?.value;
-  if (!token) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const session = await Session.findOne({ token, expiresAt: { $gt: new Date() } });
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const user = await User.findById(session.userId);
+  const user = await getUserFromSession(token);
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

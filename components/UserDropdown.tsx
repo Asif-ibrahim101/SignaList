@@ -102,6 +102,12 @@ const UserDropdown = () => {
                         </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator className="bg-border"/>
+                    <DropdownMenuItem asChild>
+                        <Link href="/profile" className="w-full text-foreground">
+                            Profile
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-border"/>
                     <DropdownMenuItem onClick={handle_Signout} className="text-foreground text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
                         <LogOut className="h-4 w-4 mr-2 hidden sm:block" />
                         Logout
