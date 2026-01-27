@@ -4,8 +4,6 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 
 const NavItems = () => {
-    console.log(NAVITEMS);
-
     const pathName = usePathname();
 
     const isActive = (path : string) => {

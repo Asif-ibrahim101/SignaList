@@ -8,13 +8,17 @@ import { INVESTMENT_GOALS, RISK_TOLERANCE_OPTIONS } from "@/lib/constants";
 import { PREFERRED_INDUSTRIES } from "@/lib/constants";
 import { CountrySelectField } from "@/components/Forms/CountrySelectForm";
 import FooterLink from "@/components/Forms/FooterLinks";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const SignUp = () => {
+    const router = useRouter();
+    const [formError, setFormError] = useState('');
     const {
         register,
         handleSubmit,
         control,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<SignUpFormData>({
         defaultValues: {
             fullName: '',
@@ -29,10 +33,20 @@ const SignUp = () => {
     }, );
 
     const onSubmit = async (data: SignUpFormData) => {
+      setFormError('');
       try {
-        console.log(data);
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result?.error || 'Sign up failed.');
+        }
+        router.push('/');
       } catch (error) {
-        console.error(error);
+        setFormError(error instanceof Error ? error.message : 'Sign up failed.');
       }
     };
 
@@ -109,9 +123,10 @@ const SignUp = () => {
                 />
 
 
-                <Button type="submit" className="yellow-btn w-full mt-5">
-                    Create Account
+                <Button type="submit" disabled={isSubmitting} className="yellow-btn w-full mt-5">
+                    {isSubmitting ? 'Creating Account' : 'Create Account'}
                 </Button>
+                {formError && <p className="text-sm text-red-500">{formError}</p>}
 
                 <FooterLink text="Already have an account?" linkText="Sign in" href="/sign-in" />
             </form>

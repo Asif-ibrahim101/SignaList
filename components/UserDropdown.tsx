@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import {
@@ -13,18 +13,55 @@ import {
 import NavItems from "@/components/NavItems";
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
-import { LogOut, LogOutIcon } from 'lucide-react';
+import { LogOut } from 'lucide-react';
+import Link from "next/link";
 
 const UserDropdown = () => {
     const router = useRouter();
 
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+
     const handle_Signout = async () => {
-      router.push("/sign-in")
+      await fetch('/api/auth/logout', { method: 'POST' });
+      setUser(null);
+      router.push("/sign-in");
     };
 
-    //testing the user login
-    const user = {name: 'John', email: "contact@jsmastery.com"};
-    console.log(user.name[0])
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const response = await fetch('/api/auth/me');
+          if (!response.ok) {
+            setUser(null);
+            return;
+          }
+          const data = await response.json();
+          setUser(data?.user ?? null);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchUser();
+    }, []);
+
+    if (loading) {
+      return (
+        <Button variant="ghost" className="flex items-center gap-2 text-muted-foreground">
+          Loading...
+        </Button>
+      );
+    }
+
+    if (!user) {
+      return (
+        <Link href="/sign-in" className="text-sm font-medium text-muted-foreground hover:text-yellow-500">
+          Sign In
+        </Link>
+      );
+    }
+
     return (
         <div>
             <DropdownMenu>
