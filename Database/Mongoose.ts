@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URL || "mongodb+srv://asifibrahim:sgwKBYUc6PQvios0@cluster0.p0zfvt6.mongodb.net/?appName=Cluster0";
+const MONGODB_URI = process.env.MONGODB_URL || "mongodb+srv://procoder99990_db_user:6UemIJeatotGThGq@signalist2.8udrdge.mongodb.net/?appName=Signalist2";
 
 declare global {
     var mongooseCache: { conn: typeof mongoose | null, promise: Promise<typeof mongoose> | null };
