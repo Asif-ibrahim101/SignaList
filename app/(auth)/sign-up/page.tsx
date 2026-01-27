@@ -44,7 +44,7 @@ const SignUp = () => {
         if (!response.ok) {
             throw new Error(result?.error || 'Sign up failed.');
         }
-        router.push('/');
+        router.push('/app');
       } catch (error) {
         setFormError(error instanceof Error ? error.message : 'Sign up failed.');
       }

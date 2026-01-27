@@ -103,7 +103,7 @@ const UserDropdown = () => {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator className="bg-border"/>
                     <DropdownMenuItem asChild>
-                        <Link href="/profile" className="w-full text-foreground">
+                        <Link href="/app/profile" className="w-full text-foreground">
                             Profile
                         </Link>
                     </DropdownMenuItem>

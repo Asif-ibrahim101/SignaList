@@ -38,7 +38,7 @@ const SignIn = () => {
             if (!response.ok) {
                 throw new Error(result?.error || 'Sign in failed.');
             }
-            router.push('/');
+            router.push('/app');
         } catch (e) {
             setFormError(e instanceof Error ? e.message : 'Failed to sign in.');
         }
