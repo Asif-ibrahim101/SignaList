@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react';
-import { MessageSquareText, X } from 'lucide-react';
+import { Bot, Sparkles, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { POPULAR_STOCK_SYMBOLS } from '@/lib/constants';
+import ReactMarkdown from 'react-markdown';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -88,26 +89,37 @@ const AiInsightChat = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {open && (
-        <div className="w-[92vw] max-w-[420px] rounded-2xl border border-border bg-card shadow-xl">
-          <div className="flex items-center justify-between border-b border-border px-4 py-3">
-            <div>
-              <p className="text-sm font-semibold text-foreground">AI Investment Insight</p>
-              <p className="text-xs text-muted-foreground">Educational only, not financial advice.</p>
+        <div className="w-[92vw] max-w-[460px] overflow-hidden rounded-2xl border border-border bg-card/95 shadow-2xl backdrop-blur">
+          <div className="border-b border-border bg-gradient-to-r from-yellow-500/15 via-transparent to-emerald-500/15 px-4 py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-yellow-500/15 text-yellow-500">
+                  <Sparkles className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">AI Investment Insight</p>
+                  <p className="text-xs text-muted-foreground">Educational only, not financial advice.</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="rounded-md p-2 text-muted-foreground transition hover:bg-accent"
+                onClick={() => setOpen(false)}
+                aria-label="Close AI chat"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
-            <button
-              type="button"
-              className="rounded-md p-2 text-muted-foreground hover:bg-accent"
-              onClick={() => setOpen(false)}
-              aria-label="Close AI chat"
-            >
-              <X className="h-4 w-4" />
-            </button>
+            <div className="mt-2 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              Live assistant
+            </div>
           </div>
 
-          <div className="max-h-[320px] space-y-3 overflow-y-auto px-4 py-3">
+          <div className="max-h-[340px] space-y-3 overflow-y-auto px-4 py-4">
             {messages.length === 0 && (
-              <div className="rounded-lg border border-dashed border-border bg-muted/40 px-3 py-3 text-xs text-muted-foreground">
-                Ask about any stock symbol to get a short, educational breakdown.
+              <div className="rounded-xl border border-dashed border-border bg-muted/40 px-4 py-3 text-xs text-muted-foreground">
+                Ask about any stock symbol to get a short, structured breakdown.
               </div>
             )}
             {messages.map((message, index) => (
@@ -115,25 +127,49 @@ const AiInsightChat = () => {
                 key={`${message.role}-${index}`}
                 className={
                   message.role === 'user'
-                    ? 'ml-auto max-w-[85%] rounded-lg bg-yellow-500/15 px-3 py-2 text-xs text-foreground'
-                    : 'mr-auto max-w-[85%] rounded-lg bg-muted px-3 py-2 text-xs text-foreground'
+                    ? 'ml-auto max-w-[85%] rounded-2xl border border-yellow-500/20 bg-yellow-500/10 px-3 py-2 text-xs text-foreground shadow-sm'
+                    : 'mr-auto max-w-[85%] rounded-2xl border border-border bg-muted/70 px-3 py-2 text-xs text-foreground shadow-sm'
                 }
               >
-                {message.content}
+                <div className="prose prose-sm max-w-none text-foreground">
+                  <ReactMarkdown
+                    components={{
+                      h2: ({ children }) => (
+                        <h2 className="mb-2 mt-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                          {children}
+                        </h2>
+                      ),
+                      ul: ({ children }) => (
+                        <ul className="list-disc space-y-1 pl-5 text-xs text-foreground">{children}</ul>
+                      ),
+                      li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                      p: ({ children }) => (
+                        <p className="text-xs leading-relaxed text-foreground">{children}</p>
+                      ),
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                </div>
               </div>
             ))}
             <div ref={endRef} />
           </div>
 
-          <div className="border-t border-border px-4 py-3">
-            <div className="flex items-center gap-2">
-              <input
-                value={symbol}
-                onChange={(event) => setSymbol(event.target.value.toUpperCase())}
-                className="h-9 w-20 rounded-md border border-border bg-background px-2 text-xs text-foreground"
-                placeholder="AAPL"
-                list="ai-symbols"
-              />
+          <div className="border-t border-border px-4 py-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-2 rounded-xl border border-border bg-background px-2 py-1">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  Symbol
+                </span>
+                <input
+                  value={symbol}
+                  onChange={(event) => setSymbol(event.target.value.toUpperCase())}
+                  className="h-7 w-16 bg-transparent text-xs font-semibold text-foreground outline-none"
+                  placeholder="AAPL"
+                  list="ai-symbols"
+                />
+              </div>
               <datalist id="ai-symbols">
                 {POPULAR_STOCK_SYMBOLS.map((item) => (
                   <option key={item} value={item} />
@@ -142,13 +178,13 @@ const AiInsightChat = () => {
               <input
                 value={question}
                 onChange={(event) => setQuestion(event.target.value)}
-                className="h-9 flex-1 rounded-md border border-border bg-background px-2 text-xs text-foreground"
+                className="h-9 flex-1 rounded-xl border border-border bg-background px-3 text-xs text-foreground"
                 placeholder="Ask for risks, valuation, catalysts..."
               />
               <Button
                 type="button"
                 size="sm"
-                className="bg-yellow-500 text-gray-900 hover:bg-yellow-500/90"
+                className="rounded-xl bg-yellow-500 text-gray-900 hover:bg-yellow-500/90"
                 onClick={handleSend}
                 disabled={loading || cooldownSeconds > 0}
               >
@@ -169,11 +205,11 @@ const AiInsightChat = () => {
         type="button"
         size="icon-lg"
         onClick={() => setOpen((prev) => !prev)}
-        className="h-12 w-12 rounded-full bg-yellow-500 text-gray-900 shadow-lg hover:bg-yellow-500/90"
+        className="h-12 w-12 rounded-full bg-yellow-500 text-gray-900 shadow-lg shadow-yellow-500/30 hover:bg-yellow-500/90"
         aria-expanded={open}
         aria-label="Open AI insight chat"
       >
-        <MessageSquareText className="h-5 w-5" />
+        <Bot className="h-5 w-5" />
       </Button>
     </div>
   );

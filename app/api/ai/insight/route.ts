@@ -37,8 +37,15 @@ const buildPrompt = (symbol: string, question?: string) => {
     `You are a finance education assistant. Provide educational insight only.`,
     `Do NOT give buy/sell/hold recommendations or predict prices.`,
     `Do NOT invent specific financial metrics. If data is unknown, say "Data not available in this demo."`,
-    `Answer in short sections with headings: Overview, Risks, Valuation, Trend, Catalysts, and Summary.`,
-    `Include a short disclaimer: "Educational only, not financial advice."`,
+    `Return a clean, well-formatted response using Markdown with these sections:`,
+    `## Overview`,
+    `## Risks`,
+    `## Valuation`,
+    `## Trend`,
+    `## Catalysts`,
+    `## Summary`,
+    `Each section should be 2-4 bullet points, short and clear.`,
+    `End with a separate line: "Educational only, not financial advice."`,
     ``,
     `Stock symbol: ${symbol}.`,
     userQuestion ? `User question: ${userQuestion}` : `User question: Give an educational overview with risks, valuation, trend, and catalysts.`,
@@ -46,9 +53,9 @@ const buildPrompt = (symbol: string, question?: string) => {
 };
 
 export async function POST(request: NextRequest) {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    return NextResponse.json({ error: 'Missing GEMINI_API_KEY on the server.' }, { status: 500 });
+    return NextResponse.json({ error: 'Missing OPENAI_API_KEY on the server.' }, { status: 500 });
   }
 
   const ip = getClientIp(request);
@@ -91,27 +98,24 @@ export async function POST(request: NextRequest) {
 
   const prompt = buildPrompt(symbol, body.question);
 
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.4,
-          maxOutputTokens: 500,
-        },
-      }),
-    }
-  );
+  const response = await fetch('https://api.openai.com/v1/responses', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      input: prompt,
+      temperature: 0.4,
+      max_output_tokens: 500,
+    }),
+  });
 
   if (!response.ok) {
     const errorText = await response.text();
     let details = errorText;
-    let errorMessage = 'Gemini API error.';
+    let errorMessage = 'OpenAI API error.';
     let retryAfterSeconds: number | undefined;
 
     const retryAfterHeader = response.headers.get('retry-after');
@@ -126,8 +130,8 @@ export async function POST(request: NextRequest) {
       if (apiError?.message) {
         details = apiError.message;
       }
-      if (apiError?.status === 'RESOURCE_EXHAUSTED' || response.status === 429) {
-        errorMessage = 'Gemini rate limit reached. Please try again later.';
+      if (apiError?.code === 'rate_limit_exceeded' || response.status === 429) {
+        errorMessage = 'OpenAI rate limit reached. Please try again later.';
       }
     } catch {
       // Keep raw text details
@@ -141,13 +145,17 @@ export async function POST(request: NextRequest) {
 
   const data = await response.json();
   const text =
-    data?.candidates?.[0]?.content?.parts
+    data?.output_text ??
+    data?.output
+      ?.flatMap((item: { content?: { type: string; text?: string }[] }) => item.content ?? [])
+      ?.filter((part: { type: string }) => part.type === 'output_text')
       ?.map((part: { text?: string }) => part.text ?? '')
-      .join('')
-      .trim() ?? '';
+      ?.join('')
+      ?.trim() ??
+    '';
 
   if (!text) {
-    return NextResponse.json({ error: 'No response from Gemini.' }, { status: 500 });
+    return NextResponse.json({ error: 'No response from OpenAI.' }, { status: 500 });
   }
 
   cacheStore.set(cacheKey, { text, expiresAt: Date.now() + CACHE_TTL_MS });
