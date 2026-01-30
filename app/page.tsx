@@ -1,19 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, BellRing, LineChart, Sparkles } from "lucide-react";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { getUserFromSession } from "@/lib/session";
 
 const LandingPage = async () => {
-  const token = cookies().get("session")?.value;
-  if (token) {
-    const user = await getUserFromSession(token);
-    if (user) {
-      redirect("/app");
-    }
-  }
-
   return (
     <main className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border">
