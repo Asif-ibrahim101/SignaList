@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { BarChart3, Menu, X } from "lucide-react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Navbar = () => {
@@ -11,11 +12,14 @@ export const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary">
-            <BarChart3 className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="text-xl font-bold text-foreground">SignaList</span>
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/assets/icons/Logo.svg"
+            alt="SignaList"
+            width={210}
+            height={48}
+            className="h-8 w-auto"
+          />
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">

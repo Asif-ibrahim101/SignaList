@@ -1,4 +1,4 @@
-import { BarChart3 } from "lucide-react";
+import Image from "next/image";
 
 const footerLinks = {
   Product: ["Features", "Pricing", "Markets", "API"],
@@ -14,10 +14,13 @@ export const Footer = () => {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
             <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary">
-                <BarChart3 className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold text-foreground">SignaList</span>
+              <Image
+                src="/assets/icons/Logo.svg"
+                alt="SignaList"
+                width={210}
+                height={48}
+                className="h-8 w-auto"
+              />
             </div>
             <p className="mb-4 max-w-xs text-sm text-muted-foreground">
               Professional-grade market analysis tools for traders of all levels.
