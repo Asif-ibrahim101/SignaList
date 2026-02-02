@@ -3,6 +3,13 @@
 import React, { useEffect, useRef, memo } from 'react';
 import { useTheme } from '@/components/ThemeProvider';
 
+/**
+ * Renders a container that loads TradingView's ticker tape widget into the DOM.
+ *
+ * The component injects TradingView's embed script into its container on mount, guards against duplicate injections using a `data-loaded` flag, and removes inserted script elements and the flag on unmount.
+ *
+ * @returns A JSX element containing the TradingView ticker tape widget container.
+ */
 function TickerTapeWidget() {
   const container = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();

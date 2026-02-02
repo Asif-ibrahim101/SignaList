@@ -6,24 +6,45 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Render the select root element with a `data-slot="select"` attribute.
+ *
+ * @returns A React element representing the select root with `data-slot="select"`.
+ */
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />
 }
 
+/**
+ * Renders a select group wrapper that applies `data-slot="select-group"` and forwards received props.
+ *
+ * @returns The rendered select group element.
+ */
 function SelectGroup({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Group>) {
   return <SelectPrimitive.Group data-slot="select-group" {...props} />
 }
 
+/**
+ * Renders a Select value element and applies the component's data-slot hook.
+ *
+ * @returns The SelectPrimitive.Value element with `data-slot="select-value"` and all supplied props forwarded.
+ */
 function SelectValue({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />
 }
 
+/**
+ * Render a styled select trigger button that displays the trigger content and a downward chevron.
+ *
+ * @param size - Visual size of the trigger; `"sm"` uses a more compact height, `"default"` uses the standard height.
+ * @returns A JSX element representing the select trigger button.
+ */
 function SelectTrigger({
   className,
   size = "default",
@@ -50,6 +71,15 @@ function SelectTrigger({
   )
 }
 
+/**
+ * Render the Select dropdown content with built-in positioning, alignment, and scroll controls.
+ *
+ * @param className - Additional CSS class names to apply to the content container
+ * @param children - Nodes to render inside the content viewport
+ * @param position - Content positioning strategy; when set to `"popper"` applies popper-style offsets and sizing
+ * @param align - Horizontal alignment of the content relative to the trigger
+ * @returns The Select content element (a content container rendered inside a Portal)
+ */
 function SelectContent({
   className,
   children,
@@ -87,6 +117,11 @@ function SelectContent({
   )
 }
 
+/**
+ * Renders a label for the Select component with project default muted styling and a data-slot attribute.
+ *
+ * @returns A Label element configured for the Select component
+ */
 function SelectLabel({
   className,
   ...props
@@ -100,6 +135,14 @@ function SelectLabel({
   )
 }
 
+/**
+ * Render a styled option inside the Select dropdown with a right-aligned check indicator.
+ *
+ * The item displays its children as the label, shows a checked indicator when selected,
+ * and respects disabled state via data attributes (pointer events and opacity).
+ *
+ * @returns The rendered select item element
+ */
 function SelectItem({
   className,
   children,
@@ -124,6 +167,12 @@ function SelectItem({
   )
 }
 
+/**
+ * Renders a styled separator for the Select dropdown.
+ *
+ * @param className - Additional CSS class names to merge with the component's default separator styles
+ * @returns The rendered separator element
+ */
 function SelectSeparator({
   className,
   ...props
@@ -137,6 +186,11 @@ function SelectSeparator({
   )
 }
 
+/**
+ * Renders the scroll-up control for the Select dropdown.
+ *
+ * @returns A JSX element rendering a styled scroll-up button containing an upward chevron icon.
+ */
 function SelectScrollUpButton({
   className,
   ...props
@@ -155,6 +209,11 @@ function SelectScrollUpButton({
   )
 }
 
+/**
+ * Renders the scroll-down control used inside the select dropdown.
+ *
+ * @returns The rendered scroll-down button element for the select dropdown
+ */
 function SelectScrollDownButton({
   className,
   ...props
