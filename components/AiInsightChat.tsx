@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown';
 type Message = {
   role: 'user' | 'assistant';
   content: string;
+  ragSources?: number;
 };
 
 const DEFAULT_QUESTION = 'Give an educational overview with risks, valuation, trend, and catalysts.';
@@ -77,7 +78,7 @@ const AiInsightChat = () => {
         throw new Error((data?.error || 'Unable to fetch AI insight.') + detail);
       }
 
-      setMessages((prev) => [...prev, { role: 'assistant', content: data.text }]);
+      setMessages((prev) => [...prev, { role: 'assistant', content: data.text, ragSources: data.ragSources ?? 0 }]);
       setQuestion('');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong.');
@@ -151,6 +152,18 @@ const AiInsightChat = () => {
                     {message.content}
                   </ReactMarkdown>
                 </div>
+                {message.role === 'assistant' && (
+                  <div className="mt-2 flex items-center gap-1.5 border-t border-border/50 pt-1.5">
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full ${message.ragSources ? 'bg-emerald-400' : 'bg-orange-400'}`}
+                    />
+                    <span className="text-[10px] text-muted-foreground">
+                      {message.ragSources
+                        ? `RAG: ${message.ragSources} source${message.ragSources > 1 ? 's' : ''}`
+                        : 'RAG: no context found'}
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
             <div ref={endRef} />
