@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 3;
-const MIN_INTERVAL_MS = 12_000;
+const MIN_INTERVAL_MS = 5_000; // Reduced for local testing
 const CACHE_TTL_MS = 15 * 60_000;
 
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
@@ -53,10 +53,7 @@ const buildPrompt = (symbol: string, question?: string) => {
 };
 
 export async function POST(request: NextRequest) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({ error: 'Missing OPENAI_API_KEY on the server.' }, { status: 500 });
-  }
+  // No API key check needed for local Ollama
 
   const ip = getClientIp(request);
   const now = Date.now();
@@ -98,66 +95,41 @@ export async function POST(request: NextRequest) {
 
   const prompt = buildPrompt(symbol, body.question);
 
-  const response = await fetch('https://api.openai.com/v1/responses', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      input: prompt,
-      temperature: 0.4,
-      max_output_tokens: 500,
-    }),
-  });
+  try {
+    const response = await fetch('http://127.0.0.1:11434/api/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama3', // Adjust if you pulled a specific tag like 'llama3:latest'
+        prompt: prompt,
+        stream: false,
+      }),
+    });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    let details = errorText;
-    let errorMessage = 'OpenAI API error.';
-    let retryAfterSeconds: number | undefined;
-
-    const retryAfterHeader = response.headers.get('retry-after');
-    if (retryAfterHeader) {
-      const parsed = Number(retryAfterHeader);
-      if (!Number.isNaN(parsed)) retryAfterSeconds = parsed;
+    if (!response.ok) {
+      throw new Error(`Ollama API error: ${response.statusText}`);
     }
 
-    try {
-      const parsed = JSON.parse(errorText);
-      const apiError = parsed?.error;
-      if (apiError?.message) {
-        details = apiError.message;
-      }
-      if (apiError?.code === 'rate_limit_exceeded' || response.status === 429) {
-        errorMessage = 'OpenAI rate limit reached. Please try again later.';
-      }
-    } catch {
-      // Keep raw text details
+    const data = await response.json();
+    const text = data.response?.trim();
+
+    if (!text) {
+      return NextResponse.json({ error: 'No response from local Llama 3.' }, { status: 500 });
     }
 
+    cacheStore.set(cacheKey, { text, expiresAt: Date.now() + CACHE_TTL_MS });
+    return NextResponse.json({ text, cached: false });
+
+  } catch (error) {
+    console.error('AI Service Error:', error);
     return NextResponse.json(
-      { error: errorMessage, details, retryAfterSeconds },
-      { status: response.status }
+      {
+        error: 'Unable to connect to local AI service. Is Ollama running?',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 503 }
     );
   }
-
-  const data = await response.json();
-  const text =
-    data?.output_text ??
-    data?.output
-      ?.flatMap((item: { content?: { type: string; text?: string }[] }) => item.content ?? [])
-      ?.filter((part: { type: string }) => part.type === 'output_text')
-      ?.map((part: { text?: string }) => part.text ?? '')
-      ?.join('')
-      ?.trim() ??
-    '';
-
-  if (!text) {
-    return NextResponse.json({ error: 'No response from OpenAI.' }, { status: 500 });
-  }
-
-  cacheStore.set(cacheKey, { text, expiresAt: Date.now() + CACHE_TTL_MS });
-  return NextResponse.json({ text, cached: false });
 }
