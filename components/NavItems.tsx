@@ -18,7 +18,7 @@ const NavItems = () => {
                 {NAVITEMS.map((item) => (
                     <li key={item.href}>
                         <Link href={item.href} className={`hover:text-yellow-500 transition-colors ${isActive(item.href) ? `text-foreground` : 'text-muted-foreground'}`}>
-                            {item.title}
+                            {item.label}
                         </Link>
                     </li>
                 ))}

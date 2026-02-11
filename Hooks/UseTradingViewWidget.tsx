@@ -3,12 +3,14 @@ import { useEffect, useRef } from 'react'
 
 const UseTradingViewWidget = (scriptUrl: string, config: Record<string, unknown>, height: number) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const serializedConfig = JSON.stringify(config);
 
     useEffect(() => {
-        if(!containerRef.current) return;
+        const container = containerRef.current;
+        if(!container) return;
         
         // Find the widget container div (the one with class "tradingview-widget-container__widget")
-        const widgetContainer = containerRef.current.querySelector('.tradingview-widget-container__widget');
+        const widgetContainer = container.querySelector('.tradingview-widget-container__widget');
         if(!widgetContainer) return;
         
         // Reset container so switching configs/scripts re-initializes cleanly
@@ -19,25 +21,19 @@ const UseTradingViewWidget = (scriptUrl: string, config: Record<string, unknown>
         script.src = scriptUrl;
         script.type = "text/javascript";
         script.async = true;
-        script.innerHTML = JSON.stringify(config);
+        script.text = serializedConfig;
         
         // Append script to the widget container (TradingView script will render into this container)
         widgetContainer.appendChild(script);
 
         return () => {
-            const current = containerRef.current;
-            if(current) {
-                const widget = current.querySelector('.tradingview-widget-container__widget');
-                if(widget) {
-                    // Remove all scripts from the widget container
-                    const scripts = widget.querySelectorAll('script');
-                    scripts.forEach(s => s.remove());
-                    widget.innerHTML = "";
-                }
-            }
+            // Remove all scripts from the widget container
+            const scripts = widgetContainer.querySelectorAll('script');
+            scripts.forEach(s => s.remove());
+            widgetContainer.innerHTML = "";
         }
 
-    }, [scriptUrl, config, height]);
+    }, [scriptUrl, serializedConfig, height]);
 
     return containerRef;
 }

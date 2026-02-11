@@ -1,15 +1,15 @@
 'use client'
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import TradingViewWidget from '@/components/TradingViewWidget';
 import HeatmapSwitcher from '@/components/HeatmapSwitcher';
+import SignalLeaderboard from '@/components/SignalLeaderboard';
+import CompositeAlertsPanel from '@/components/CompositeAlertsPanel';
 import {
-  MARKET_OVERVIEW_WIDGET_CONFIG,
   TOP_STORIES_WIDGET_CONFIG,
   MARKET_DATA_WIDGET_CONFIG,
   HOTLISTS_WIDGET_CONFIG,
   TECHNICAL_ANALYSIS_WIDGET_CONFIG,
-  POPULAR_STOCK_SYMBOLS,
 } from '@/lib/constants';
 import { useTheme } from '@/components/ThemeProvider';
 
@@ -17,9 +17,6 @@ const HomeDashboard = () => {
   const { theme } = useTheme();
   const widgetTheme = theme === 'dark' ? 'dark' : 'light';
   const scriptUrl = 'https://s3.tradingview.com/external-embedding/embed-widget-';
-  const [taSymbol, setTaSymbol] = useState('AAPL');
-  const normalizedSymbol = taSymbol.trim().toUpperCase();
-  const isKnownSymbol = POPULAR_STOCK_SYMBOLS.includes(normalizedSymbol);
 
   const withWidgetTheme = useMemo(() => {
     const backgroundColor = widgetTheme === 'dark' ? '#141414' : '#FFFFFF';
@@ -37,18 +34,17 @@ const HomeDashboard = () => {
   return (
     <div className="flex home-wrapper min-h-screen">
       <section className="grid gap-8 home-section w-full">
-        <div className="md:col-span-1 xl:col-span-1">
-          <TradingViewWidget
-            title="Market Overview"
-            scriptUrl={`${scriptUrl}market-overview.js`}
-            config={withWidgetTheme(MARKET_OVERVIEW_WIDGET_CONFIG)}
-            height={600}
-            className="custom-chart"
-          />
-        </div>
-
-        <div className="md:col-span-1 xl:col-span-2">
+        <div className="md:col-span-2 xl:col-span-3">
           <HeatmapSwitcher scriptBaseUrl={scriptUrl} theme={widgetTheme} />
+        </div>
+      </section>
+
+      <section className="grid w-full gap-8 home-section auto-rows-[minmax(700px,1fr)]">
+        <div className="md:col-span-2 xl:col-span-2">
+          <SignalLeaderboard />
+        </div>
+        <div className="md:col-span-1 xl:col-span-1">
+          <CompositeAlertsPanel />
         </div>
       </section>
 
@@ -56,6 +52,7 @@ const HomeDashboard = () => {
         <div className="h-full md:col-span-1 xl:col-span-1">
           <TradingViewWidget
             title="Top Movers"
+            description="Stocks with the biggest gains, losses, and trading volume today. Updated in real time."
             scriptUrl={`${scriptUrl}hotlists.js`}
             config={withWidgetTheme(HOTLISTS_WIDGET_CONFIG)}
             height={600}
@@ -63,52 +60,26 @@ const HomeDashboard = () => {
         </div>
         <div className="h-full md:col-span-1 xl:col-span-1">
           <TradingViewWidget
+            title="Market News"
+            description="Latest headlines and stories moving the stock market right now."
             scriptUrl={`${scriptUrl}timeline.js`}
             config={withWidgetTheme(TOP_STORIES_WIDGET_CONFIG)}
             height={600}
           />
         </div>
         <div className="h-full md:col-span-1 xl:col-span-1">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="text-2xl font-bold">Technical Analysis</h3>
-            <div className="flex items-center gap-2">
-              <label htmlFor="ta-symbol" className="text-sm text-muted-foreground">
-                Symbol
-              </label>
-              <input
-                id="ta-symbol"
-                list="ta-symbols"
-                value={taSymbol}
-                onChange={(event) => setTaSymbol(event.target.value.toUpperCase())}
-                onBlur={() => setTaSymbol((value) => value.trim().toUpperCase() || 'AAPL')}
-                className="h-9 w-24 rounded-md border border-border bg-card px-2 text-sm text-foreground"
-                placeholder="AAPL"
-              />
-              <datalist id="ta-symbols">
-                {POPULAR_STOCK_SYMBOLS.map((symbol) => (
-                  <option key={symbol} value={symbol} />
-                ))}
-              </datalist>
-            </div>
-          </div>
-          <div className="mt-3">
-            {isKnownSymbol ? (
-              <TradingViewWidget
-                scriptUrl={`${scriptUrl}technical-analysis.js`}
-                config={{ ...withWidgetTheme(TECHNICAL_ANALYSIS_WIDGET_CONFIG(normalizedSymbol)), height: 600 }}
-                height={600}
-              />
-            ) : (
-              <div className="flex h-[600px] flex-col items-center justify-center rounded-lg border border-border bg-card text-center">
-                <p className="text-sm text-muted-foreground">
-                  No data for “{normalizedSymbol || '—'}”. Try a symbol from the list.
-                </p>
-              </div>
-            )}
-          </div>
+          <TradingViewWidget
+            title="Technical Analysis"
+            description="Buy, sell, and neutral indicators based on moving averages and oscillators."
+            scriptUrl={`${scriptUrl}technical-analysis.js`}
+            config={{ ...withWidgetTheme(TECHNICAL_ANALYSIS_WIDGET_CONFIG('AAPL')), height: 600 }}
+            height={600}
+          />
         </div>
         <div className="h-full md:col-span-2 xl:col-span-3">
           <TradingViewWidget
+            title="Market Quotes"
+            description="Live prices, daily change, and key stats for tracked stocks across sectors."
             scriptUrl={`${scriptUrl}market-quotes.js`}
             config={withWidgetTheme(MARKET_DATA_WIDGET_CONFIG)}
             height={600}

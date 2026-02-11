@@ -7,7 +7,8 @@ import { redirect } from "next/navigation";
 import { getUserFromSession } from "@/lib/session";
 
 const Layout = async ({children} : {children: React.ReactNode}) => {
-    const token = cookies().get('session')?.value;
+    const cookieStore = await cookies();
+    const token = cookieStore.get('session')?.value;
     const user = await getUserFromSession(token);
 
     if (!user) {

@@ -64,6 +64,12 @@ const HeatmapSwitcher = ({ scriptBaseUrl, theme }: { scriptBaseUrl: string; them
 
   return (
     <div className="flex flex-col gap-4">
+      <div>
+        <h3 className="text-2xl font-bold">Market Heatmap</h3>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Visualise market performance at a glance. Green means the asset is up, red means it is down. Larger blocks represent higher market cap.
+        </p>
+      </div>
       <div className="flex flex-wrap gap-2">
         {HEATMAP_OPTIONS.map((option) => {
           const isActive = option.key === activeOption.key;
@@ -85,7 +91,6 @@ const HeatmapSwitcher = ({ scriptBaseUrl, theme }: { scriptBaseUrl: string; them
       </div>
 
       <TradingViewWidget
-        title={`${activeOption.label} Heatmap`}
         scriptUrl={`${scriptBaseUrl}${activeOption.script}`}
         config={themedConfig}
         height={600}
