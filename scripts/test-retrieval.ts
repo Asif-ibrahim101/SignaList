@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
 import { OllamaEmbeddings } from '@langchain/ollama';
 import * as dotenv from 'dotenv';
 import path from 'path';
@@ -11,6 +10,10 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 const client = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+type RetrievalResult = {
+    content: string;
+};
 
 const main = async () => {
     const query = process.argv[2] || 'MSFT news';
@@ -35,7 +38,7 @@ const main = async () => {
     } else if (!results || results.length === 0) {
         console.log('No results found.');
     } else {
-        results.forEach((doc: any, i: number) => {
+        results.forEach((doc: RetrievalResult, i: number) => {
             console.log(`\n--- Result ${i + 1} ---`);
             console.log(doc.content);
             console.log('------------------');

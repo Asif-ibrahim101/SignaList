@@ -14,7 +14,8 @@ const formatDate = (value?: Date | string | number | null) => {
 };
 
 const ProfilePage = async () => {
-  const token = cookies().get('session')?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get('session')?.value;
   const user = await getUserFromSession(token);
 
   if (!user) {

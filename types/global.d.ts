@@ -216,6 +216,86 @@ declare global {
         threshold: number;
         changePercent?: number;
     };
+
+    type SignalSource = 'hybrid' | 'finnhub' | 'alpha_vantage' | 'synthetic';
+
+    type SignalFactorContribution = {
+        name: string;
+        label: string;
+        score: number;
+        weight: number;
+        contribution: number;
+        direction: 'positive' | 'negative' | 'neutral';
+    };
+
+    type SignalSnapshotView = {
+        symbol: string;
+        score: number;
+        scoreDelta: number;
+        confidence: number;
+        price: number;
+        changePercent: number;
+        volume: number;
+        sentiment: number;
+        volumeZScore: number;
+        source: SignalSource;
+        narrative: string;
+        factors: SignalFactorContribution[];
+        updatedAt: string;
+        lastMode: 'intraday' | 'batch';
+    };
+
+    type SignalHistoryPoint = {
+        timestamp: string;
+        score: number;
+        scoreDelta: number;
+        changePercent: number;
+        sentiment: number;
+    };
+
+    type AlertMetricField =
+        | 'score'
+        | 'scoreDelta'
+        | 'sentiment'
+        | 'volumeZScore'
+        | 'confidence'
+        | 'changePercent';
+
+    type AlertMetricOperator = '>' | '>=' | '<' | '<=' | '==';
+
+    type CompositeAlertCondition = {
+        field: AlertMetricField;
+        operator: AlertMetricOperator;
+        value: number;
+    };
+
+    type CompositeAlertRuleView = {
+        id: string;
+        name: string;
+        symbols: string[];
+        conditions: CompositeAlertCondition[];
+        logic: 'AND' | 'OR';
+        cooldownMinutes: number;
+        channel: 'in_app';
+        isActive: boolean;
+        lastTriggeredAt: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
+    };
+
+    type AlertTriggerEventView = {
+        id: string;
+        ruleId: string;
+        ruleName: string;
+        symbol: string;
+        score: number;
+        scoreDelta: number;
+        sentiment: number;
+        volumeZScore: number;
+        confidence: number;
+        changePercent: number;
+        triggeredAt: string;
+    };
 }
 
 declare module 'react-select-country-list' {

@@ -8,7 +8,8 @@ function TickerTapeWidget() {
   const { theme } = useTheme();
 
   useEffect(() => {
-    if (!container.current) return;
+    const currentContainer = container.current;
+    if (!currentContainer) return;
 
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
@@ -45,15 +46,13 @@ function TickerTapeWidget() {
       "displayMode": "adaptive"
     });
 
-    container.current.appendChild(script);
+    currentContainer.appendChild(script);
 
     return () => {
-      if (container.current) {
-        const scripts = container.current.querySelectorAll('script');
-        scripts.forEach(s => s.remove());
-        const widget = container.current.querySelector('.tradingview-widget-container__widget');
-        if (widget) widget.innerHTML = '';
-      }
+      const scripts = currentContainer.querySelectorAll('script');
+      scripts.forEach(s => s.remove());
+      const widget = currentContainer.querySelector('.tradingview-widget-container__widget');
+      if (widget) widget.innerHTML = '';
     };
   }, [theme]);
 
