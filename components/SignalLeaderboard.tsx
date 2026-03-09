@@ -343,15 +343,15 @@ const SignalLeaderboard = () => {
 
           <div className="min-h-0 flex-1 overflow-y-auto">
             {loadingList ? (
-              <div className="p-6 text-center text-sm text-muted-foreground">Loading signals...</div>
+              <div className="p-6 text-center text-sm text-muted-foreground uppercase tracking-wider font-mono">Loading signals...</div>
             ) : listError ? (
               <div className="p-4">
-                <div className="rounded-md border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-500">
+                <div className="border-2 border-red-500 bg-red-500/10 p-4 text-sm font-bold text-red-500 uppercase tracking-wide">
                   {listError}
                 </div>
               </div>
             ) : !signals.length ? (
-              <div className="p-6 text-center text-sm text-muted-foreground">No signals yet.</div>
+              <div className="p-6 text-center text-sm text-muted-foreground uppercase tracking-wider font-mono">No signals yet.</div>
             ) : (
               signals.map((signal, index) => {
                 const isSelected = signal.symbol === selectedSymbol;
@@ -423,12 +423,12 @@ const SignalLeaderboard = () => {
         {/* Detail panel */}
         <div className="flex flex-col border-t border-border overflow-y-auto">
           {loadingDetail ? (
-            <div className="flex h-full items-center justify-center p-8 text-sm text-muted-foreground">
+            <div className="flex h-full items-center justify-center p-8 text-sm text-muted-foreground uppercase tracking-wider font-mono">
               Loading details...
             </div>
           ) : detailError ? (
             <div className="p-4">
-              <div className="rounded-md border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-500">
+              <div className="border-2 border-red-500 bg-red-500/10 p-4 text-sm font-bold text-red-500 uppercase tracking-wide">
                 {detailError}
               </div>
             </div>
