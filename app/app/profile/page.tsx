@@ -24,39 +24,39 @@ const ProfilePage = async () => {
 
   return (
     <section className="space-y-6">
-      <div className="rounded-lg border border-border bg-card p-6">
-        <h1 className="text-2xl font-bold text-foreground">Profile</h1>
-        <p className="text-sm text-muted-foreground">Your account details and preferences.</p>
+      <div className="border-2 border-border bg-card p-6 brutalist-shadow">
+        <h1 className="text-3xl font-black uppercase tracking-tight text-foreground">Profile</h1>
+        <p className="mt-2 text-xs text-muted-foreground uppercase tracking-wider font-mono">Your account details and preferences.</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs text-muted-foreground">Full name</p>
-          <p className="text-base font-medium text-foreground">{user.fullName}</p>
+        <div className="border-2 border-border bg-card p-5 brutalist-shadow">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Full name</p>
+          <p className="mt-2 text-lg font-bold text-foreground">{user.fullName}</p>
         </div>
-        <div className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs text-muted-foreground">Email</p>
-          <p className="text-base font-medium text-foreground">{user.email}</p>
+        <div className="border-2 border-border bg-card p-5 brutalist-shadow">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Email</p>
+          <p className="mt-2 text-lg font-bold text-foreground">{user.email}</p>
         </div>
-        <div className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs text-muted-foreground">Country</p>
-          <p className="text-base font-medium text-foreground">{user.country}</p>
+        <div className="border-2 border-border bg-card p-5 brutalist-shadow">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Country</p>
+          <p className="mt-2 text-lg font-bold text-foreground">{user.country}</p>
         </div>
-        <div className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs text-muted-foreground">Investment goal</p>
-          <p className="text-base font-medium text-foreground">{user.investmentGoals}</p>
+        <div className="border-2 border-border bg-card p-5 brutalist-shadow">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Investment goal</p>
+          <p className="mt-2 text-lg font-bold text-foreground">{user.investmentGoals}</p>
         </div>
-        <div className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs text-muted-foreground">Risk tolerance</p>
-          <p className="text-base font-medium text-foreground">{user.riskTolerance}</p>
+        <div className="border-2 border-border bg-card p-5 brutalist-shadow">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Risk tolerance</p>
+          <p className="mt-2 text-lg font-bold text-foreground">{user.riskTolerance}</p>
         </div>
-        <div className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs text-muted-foreground">Preferred industry</p>
-          <p className="text-base font-medium text-foreground">{user.preferredIndustry}</p>
+        <div className="border-2 border-border bg-card p-5 brutalist-shadow">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Preferred industry</p>
+          <p className="mt-2 text-lg font-bold text-foreground">{user.preferredIndustry}</p>
         </div>
-        <div className="rounded-lg border border-border bg-card p-4 md:col-span-2">
-          <p className="text-xs text-muted-foreground">Member since</p>
-          <p className="text-base font-medium text-foreground">{formatDate(user.createdAt)}</p>
+        <div className="border-2 border-border bg-card p-5 brutalist-shadow md:col-span-2">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Member since</p>
+          <p className="mt-2 text-lg font-bold text-foreground">{formatDate(user.createdAt)}</p>
         </div>
       </div>
     </section>
