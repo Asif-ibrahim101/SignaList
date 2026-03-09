@@ -574,14 +574,14 @@ const CompositeAlertsPanel = () => {
         {activeTab === 'rules' && (
           <div className="space-y-3">
             {isLoadingRules ? (
-              <p className="py-8 text-center text-sm text-muted-foreground">Loading rules...</p>
+              <p className="py-8 text-center text-sm text-muted-foreground uppercase tracking-wider font-mono">Loading rules...</p>
             ) : error ? (
-              <div className="rounded-md border border-red-500/30 bg-red-500/10 p-3">
-                <p className="text-sm text-red-500">{error}</p>
+              <div className="border-2 border-red-500 bg-red-500/10 p-4">
+                <p className="text-sm font-bold text-red-500 uppercase tracking-wide">{error}</p>
               </div>
             ) : !rules.length ? (
               <div className="py-8 text-center">
-                <p className="text-sm text-muted-foreground">No rules yet.</p>
+                <p className="text-sm text-muted-foreground uppercase tracking-wider font-mono">No rules yet.</p>
                 <button
                   type="button"
                   onClick={() => setActiveTab('create')}
@@ -661,10 +661,10 @@ const CompositeAlertsPanel = () => {
         {activeTab === 'history' && (
           <div className="space-y-2">
             {isLoadingHistory ? (
-              <p className="py-8 text-center text-sm text-muted-foreground">Loading history...</p>
+              <p className="py-8 text-center text-sm text-muted-foreground uppercase tracking-wider font-mono">Loading history...</p>
             ) : !history.length ? (
               <div className="py-8 text-center">
-                <p className="text-sm text-muted-foreground">No triggers yet.</p>
+                <p className="text-sm text-muted-foreground uppercase tracking-wider font-mono">No triggers yet.</p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   When a rule&apos;s conditions are met, matches appear here.
                 </p>
