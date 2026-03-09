@@ -3,97 +3,73 @@ import { BarChart3, LineChart, Zap, Globe, Bell, Shield } from "lucide-react";
 const features = [
   {
     icon: BarChart3,
-    title: "Volume Heatmaps",
+    title: "Stock Heatmaps",
     description:
-      "Visualize market movements at a glance with interactive heatmaps. Track every sector and index without delay.",
+      "Visualize market movements at a glance with interactive heatmaps covering all major sectors and indices.",
   },
   {
     icon: LineChart,
-    title: "Institutional Charting",
+    title: "Advanced Charts",
     description:
-      "Professional-grade charts with 100+ native indicators. Execute precision analysis on customizable timeframes.",
+      "Professional-grade charting with 100+ technical indicators, drawing tools, and customizable timeframes.",
   },
   {
     icon: Zap,
-    title: "Sub-Second Feeds",
+    title: "Real-Time Data",
     description:
-      "Lightning-fast market data pipelines. Low-latency edge delivery for equities, crypto, forex, and derivatives.",
+      "Lightning-fast market data with sub-second updates for stocks, crypto, forex, and commodities.",
   },
   {
     icon: Globe,
-    title: "Global Exchanges",
+    title: "Global Markets",
     description:
-      "Direct connections to worldwide markets. Unrestricted coverage spanning NYSE, LSE, TSE, and 50+ global venues.",
+      "Track markets worldwide with coverage of NYSE, NASDAQ, LSE, TSE, and 50+ global exchanges.",
   },
   {
     icon: Bell,
-    title: "Algorithmic Alerts",
+    title: "Smart Alerts",
     description:
-      "Deploy complex trigger conditions. Set programmatic price boundaries, trend anomalies, and volume spikes.",
+      "Set price alerts, trend notifications, and custom triggers to never miss a trading opportunity.",
   },
   {
     icon: Shield,
-    title: "Redundant Systems",
-    description:
-      "Bank-grade encryption paired with our stringent 99.99% uptime guarantee. Zero single points of failure.",
+    title: "Secure & Reliable",
+    description: "Bank-grade encryption and 99.9% uptime guarantee for worry-free trading analysis.",
   },
 ];
 
 export const FeaturesSection = () => {
   return (
-    <section id="features" className="relative py-24 lg:py-32 bg-background border-b-2 border-border">
-      <div className="container relative mx-auto px-4 lg:px-8">
-        {/* Section Header */}
-        <div className="mb-16 max-w-3xl">
-          <div className="mb-6 inline-flex items-center gap-2 border-2 border-primary bg-primary/10 px-4 py-1.5 text-xs font-mono uppercase tracking-widest text-primary font-bold">
-            02 // Platform Capabilities
-          </div>
-          <h2 className="mb-6 text-4xl font-black uppercase text-foreground sm:text-5xl lg:text-6xl tracking-tighter">
-            Architected for
-            <span className="block mt-1 text-muted-foreground italic">Lethal Precision</span>
+    <section id="features" className="relative py-20 lg:py-32">
+      <div className="absolute left-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-primary/5 blur-[150px]" />
+
+      <div className="container relative mx-auto px-4">
+        <div className="mx-auto mb-16 max-w-2xl text-center">
+          <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
+            Everything You Need to
+            <span className="text-gradient"> Trade Smarter</span>
           </h2>
-          <p className="text-xl font-medium text-foreground max-w-xl">
-            Uncompromising tools engineered for high-frequency trading and professional technical analysis.
+          <p className="text-lg text-muted-foreground">
+            Powerful tools designed for both beginners and professional traders
           </p>
         </div>
 
-        {/* Brutalist Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-2 border-border bg-border gap-px">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <div
               key={feature.title}
-              className="group relative bg-card p-10 transition-colors hover:bg-foreground hover:text-background"
+              className="group rounded-xl border border-border bg-gradient-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Icon Container */}
-              <div className="mb-8">
-                <feature.icon className="h-10 w-10 text-primary group-hover:text-background transition-colors" strokeWidth={1.5} />
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-primary">
+                <feature.icon className="h-6 w-6 text-primary-foreground" />
               </div>
-
-              {/* Content */}
-              <h3 className="mb-4 text-xl font-black uppercase tracking-tight text-foreground group-hover:text-background transition-colors">
+              <h3 className="mb-2 text-lg font-semibold text-foreground transition-colors group-hover:text-gradient">
                 {feature.title}
               </h3>
-              <p className="text-base font-medium leading-relaxed text-muted-foreground group-hover:text-background/80 transition-colors">
-                {feature.description}
-              </p>
-
-              {/* Decorative element */}
-              <div className="absolute top-4 right-4 text-xs font-mono text-border group-hover:text-background/30 font-bold">
-                [{String(index + 1).padStart(2, '0')}]
-              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
             </div>
           ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="mt-16 border-l-2 border-primary pl-6">
-          <p className="text-lg font-bold text-foreground">
-            + Dozens of undocumented edge capabilities.
-          </p>
-          <a href="#demo" className="mt-2 inline-flex items-center text-sm font-bold uppercase tracking-wider text-primary hover:text-foreground transition-colors group">
-            Explore Documentation
-            <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
-          </a>
         </div>
       </div>
     </section>

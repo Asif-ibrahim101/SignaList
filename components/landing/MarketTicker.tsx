@@ -25,38 +25,22 @@ const tickerData: TickerItem[] = [
 
 export const MarketTicker = () => {
   return (
-    <div className="w-full overflow-hidden border-y-2 border-border bg-background relative flex items-center">
-      {/* Ticker Content */}
+    <div className="w-full overflow-hidden border-b border-border bg-card/50 backdrop-blur-sm">
       <div className="animate-ticker flex whitespace-nowrap py-3">
         {[...tickerData, ...tickerData].map((item, index) => (
-          <div
-            key={`${item.symbol}-${index}`}
-            className="mx-6 flex items-center gap-4 border-r-2 border-border pr-12"
-          >
-            {/* Symbol */}
-            <span className="font-bold text-foreground font-mono text-sm tracking-widest uppercase">
-              {item.symbol}
-            </span>
-
-            {/* Price */}
-            <span className="font-medium text-foreground text-sm tabular-nums">
-              {item.price}
-            </span>
-
-            {/* Change */}
+          <div key={`${item.symbol}-${index}`} className="mx-6 flex items-center gap-2">
+            {item.icon && <span className="text-lg text-muted-foreground">{item.icon}</span>}
+            <span className="font-semibold text-foreground">{item.symbol}</span>
+            <span className="text-muted-foreground">{item.price}</span>
             <span
-              className={`flex items-center gap-1.5 font-bold font-mono text-xs tabular-nums tracking-wider uppercase ${item.isPositive
-                  ? "text-success"
-                  : "text-destructive"
-                }`}
+              className={`flex items-center gap-1 ${item.isPositive ? "text-success" : "text-destructive"}`}
             >
               {item.isPositive ? (
-                <TrendingUp className="h-4 w-4" />
+                <TrendingUp className="h-3 w-3" />
               ) : (
-                <TrendingDown className="h-4 w-4" />
+                <TrendingDown className="h-3 w-3" />
               )}
-              <span>{item.change}</span>
-              <span className="opacity-60">({item.changePercent})</span>
+              {item.change} ({item.changePercent})
             </span>
           </div>
         ))}

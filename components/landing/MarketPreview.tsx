@@ -9,52 +9,34 @@ const stockList = [
   { symbol: "C", name: "Citigroup Inc", price: "115.71", change: "+0.51", percent: "+0.44%", isPositive: true },
 ];
 
-const tabs = ["Financial", "Technology", "Services"];
-
 export const MarketPreview = () => {
   return (
-    <section id="markets" className="relative py-24 lg:py-32 bg-background border-b-2 border-border">
-      {/* Background Decor */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-          opacity: 0.15
-        }}
-      />
-
-      <div className="container relative mx-auto px-4 lg:px-8">
-        {/* Section Header */}
-        <div className="mb-16 max-w-3xl">
-          <div className="mb-6 inline-flex items-center gap-2 border-2 border-success/30 bg-success/10 px-4 py-1.5 text-xs font-mono uppercase tracking-widest text-success font-bold">
-            <span className="h-2 w-2 rounded-none bg-success animate-pulse" />
-            Live Data Feed
-          </div>
-          <h2 className="mb-6 text-4xl font-black uppercase text-foreground sm:text-5xl lg:text-6xl tracking-tighter">
+    <section id="markets" className="py-20 lg:py-32">
+      <div className="container mx-auto px-4">
+        <div className="mx-auto mb-16 max-w-2xl text-center">
+          <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
             Real-Time
-            <span className="block mt-1 text-muted-foreground italic">Market Data</span>
+            <span className="text-gradient"> Market Data</span>
           </h2>
-          <p className="text-xl font-medium text-foreground max-w-xl">
-            Unfiltered data streams for equities, crypto, and derivatives, piped raw into your dashboard.
+          <p className="text-lg text-muted-foreground">
+            Comprehensive market overview with stocks, crypto, ETFs, and forex rates
           </p>
         </div>
 
-        {/* Market Data Grid */}
-        <div className="grid gap-8 lg:grid-cols-2">
-          {/* Market Overview Card */}
-          <div className="bg-card border-2 border-border p-8 lg:p-10 transition-colors shadow-[8px_8px_0_0_var(--border)]">
-            {/* Card Header */}
-            <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-6">
-              <h3 className="text-2xl font-black uppercase tracking-tight text-foreground">Market Overview</h3>
-              <div className="flex gap-2 font-mono text-sm font-bold uppercase tracking-wider overflow-x-auto pb-2 sm:pb-0">
-                {tabs.map((tab, i) => (
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="rounded-xl border border-border bg-card/50 p-6 backdrop-blur-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-foreground">Market Overview</h3>
+              <div className="flex gap-2">
+                {["Financial", "Technology", "Services"].map((tab, i) => (
                   <button
                     key={tab}
                     type="button"
-                    className={`border-2 px-3 py-1.5 transition-colors whitespace-nowrap ${i === 0
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border text-muted-foreground hover:bg-foreground hover:text-background hover:border-foreground"
-                      }`}
+                    className={`rounded-md px-3 py-1 text-sm transition-colors ${
+                      i === 0
+                        ? "bg-secondary text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
                     {tab}
                   </button>
@@ -62,65 +44,42 @@ export const MarketPreview = () => {
               </div>
             </div>
 
-            {/* Stock List */}
-            <div className="flex flex-col gap-0 border-2 border-border bg-border">
+            <div className="space-y-3">
               {stockList.map((stock) => (
                 <div
                   key={stock.symbol}
-                  className="group flex flex-wrap items-center justify-between bg-card p-4 transition-colors hover:bg-foreground hover:text-background mb-[2px] last:mb-0"
+                  className="flex items-center justify-between rounded-lg bg-muted/30 px-4 py-3 transition-colors hover:bg-muted/50"
                 >
-                  {/* Left Side */}
-                  <div className="flex items-center gap-4">
-                    {/* Icon placeholder (brutalist block) */}
-                    <div className="flex h-12 w-12 items-center justify-center bg-primary text-sm font-black text-primary-foreground">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-primary text-xs font-bold text-primary-foreground">
                       {stock.symbol.slice(0, 2)}
                     </div>
-                    {/* Info */}
                     <div>
-                      <div className="font-black text-lg group-hover:text-background transition-colors uppercase tracking-tight">{stock.symbol}</div>
-                      <div className="text-sm font-medium text-muted-foreground group-hover:text-background/80 transition-colors">{stock.name}</div>
+                      <div className="font-semibold text-foreground">{stock.symbol}</div>
+                      <div className="text-xs text-muted-foreground">{stock.name}</div>
                     </div>
                   </div>
-
-                  {/* Right Side */}
-                  <div className="text-right mt-2 sm:mt-0 ml-auto">
-                    <div className="font-black text-lg tabular-nums group-hover:text-background transition-colors">{stock.price}</div>
+                  <div className="text-right">
+                    <div className="font-semibold text-foreground">{stock.price}</div>
                     <div
-                      className={`flex items-center justify-end gap-1.5 text-sm font-bold tabular-nums uppercase font-mono tracking-wider ${stock.isPositive ? "text-success group-hover:text-success" : "text-destructive group-hover:text-destructive"
-                        }`}
+                      className={`flex items-center gap-1 text-xs ${
+                        stock.isPositive ? "text-success" : "text-destructive"
+                      }`}
                     >
                       {stock.isPositive ? (
-                        <TrendingUp className="h-4 w-4" />
+                        <TrendingUp className="h-3 w-3" />
                       ) : (
-                        <TrendingDown className="h-4 w-4" />
+                        <TrendingDown className="h-3 w-3" />
                       )}
-                      <span>{stock.change}</span>
-                      <span className="opacity-80">({stock.percent})</span>
+                      {stock.change} {stock.percent}
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* View More Link */}
-            <div className="mt-8 text-right">
-              <button className="text-sm font-bold text-foreground hover:text-primary transition-colors uppercase tracking-widest font-mono">
-                [ View all markets ]
-              </button>
-            </div>
           </div>
 
-          {/* Heatmap Card */}
-          <div className="bg-card border-2 border-border p-8 lg:p-10 shadow-[8px_8px_0_0_var(--border)] flex flex-col">
-            <div className="mb-8 border-b-2 border-border pb-6">
-              <h3 className="text-2xl font-black uppercase tracking-tight text-foreground mb-2">Volume Heatmap</h3>
-              <p className="text-sm font-medium text-muted-foreground">Aggregated sector performance visualization.</p>
-            </div>
-            {/* The heatmap component is nested here. We wrap it to give it space and a rigid frame */}
-            <div className="flex-1 min-h-[400px] border-2 border-border relative overflow-hidden bg-background">
-              <StockHeatmap />
-            </div>
-          </div>
+          <StockHeatmap />
         </div>
       </div>
     </section>

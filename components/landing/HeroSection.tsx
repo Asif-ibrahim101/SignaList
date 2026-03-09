@@ -1,71 +1,63 @@
 import Link from "next/link";
-import { ArrowRight, Play, Terminal } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden py-24 lg:py-40 bg-background border-b-2 border-border">
-      {/* Brutalist Grid Background */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-          opacity: 0.15
-        }}
-      />
+    <section className="relative overflow-hidden py-20 lg:py-32">
+      <div className="absolute inset-0 bg-gradient-dark" />
+      <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
+      <div className="absolute right-0 top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-success/5 blur-[100px]" />
 
-      <div className="container relative mx-auto px-4 lg:px-8 flex flex-col items-start gap-12">
-        <div className="inline-flex items-center gap-3 border-2 border-border bg-card px-4 py-2 font-mono text-xs uppercase tracking-wider text-muted-foreground shadow-[4px_4px_0_0_var(--border)]">
-          <Terminal className="h-4 w-4 text-primary" />
-          <span>v2.0.4 Deployed</span>
-          <span className="h-1.5 w-1.5 rounded-none bg-primary" />
-          <span className="text-foreground font-semibold">Live</span>
-        </div>
+      <div className="container relative mx-auto px-4">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-4 py-2 text-sm backdrop-blur-sm">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
+            <span className="text-muted-foreground">Live market data</span>
+            <span className="text-success">• Real-time updates</span>
+          </div>
 
-        <div className="max-w-4xl">
-          <h1 className="mb-8 text-5xl font-black uppercase leading-[1.05] tracking-tighter text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
+          <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
             Track Markets
             <br />
-            <span className="text-primary italic">Without Noise</span>
+            <span className="text-gradient">Like a Pro</span>
           </h1>
 
-          <p className="mb-10 max-w-2xl text-xl font-medium leading-relaxed text-muted-foreground sm:text-2xl">
-            Real-time heatmaps, institutional-grade charting, and algorithmic alerts.
-            All the data. None of the fluff.
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
+            Real-time stock heatmaps, crypto tracking, forex rates, and comprehensive market analysis.
+            All the tools you need to make informed trading decisions.
           </p>
 
-          <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-            <Button size="xl" className="group rounded-none border-2 border-primary bg-primary text-primary-foreground hover:bg-foreground hover:text-background hover:border-foreground transition-all px-8 py-6 text-lg font-bold uppercase tracking-tight shadow-[6px_6px_0_0_var(--foreground)] hover:shadow-[2px_2px_0_0_var(--foreground)]" asChild>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Button variant="hero" size="xl" className="group w-full sm:w-auto" asChild>
               <Link href="/sign-up">
-                Start Trading Terminal
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                Start Free Trial
+                <ArrowRight className="transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
-            <Button variant="outline" size="xl" className="group rounded-none border-2 border-border bg-transparent hover:bg-white/5 px-8 py-6 text-lg font-bold uppercase tracking-tight" asChild>
+            <Button variant="heroOutline" size="xl" className="w-full sm:w-auto" asChild>
               <a href="#markets">
-                <Play className="mr-2 h-5 w-5 fill-current" />
-                View Demo
+                <Play className="h-4 w-4" />
+                Watch Demo
               </a>
             </Button>
           </div>
-        </div>
 
-        {/* Stats Section moved to align left and feel more technical */}
-        <div className="mt-16 grid grid-cols-2 gap-x-12 gap-y-8 border-t-2 border-border pt-12 md:grid-cols-3 w-full max-w-4xl">
-          <div className="flex flex-col gap-2 relative">
-            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-primary transform scale-y-0 transition-transform origin-bottom hover:scale-y-100" />
-            <span className="text-sm font-mono text-muted-foreground uppercase tracking-wider">Active Nodes</span>
-            <span className="text-4xl font-black tracking-tighter text-foreground">50.2K+</span>
-          </div>
-          <div className="flex flex-col gap-2 relative">
-            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-primary transform scale-y-0 transition-transform origin-bottom hover:scale-y-100" />
-            <span className="text-sm font-mono text-muted-foreground uppercase tracking-wider">Markets</span>
-            <span className="text-4xl font-black tracking-tighter text-foreground">140+</span>
-          </div>
-          <div className="flex flex-col gap-2 relative">
-            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-primary transform scale-y-0 transition-transform origin-bottom hover:scale-y-100" />
-            <span className="text-sm font-mono text-muted-foreground uppercase tracking-wider">Uptime SLA</span>
-            <span className="text-4xl font-black tracking-tighter text-primary">99.99%</span>
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold text-foreground">50K+</span>
+              Active Traders
+            </div>
+            <div className="hidden h-4 w-px bg-border sm:block" />
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold text-foreground">100+</span>
+              Markets Covered
+            </div>
+            <div className="hidden h-4 w-px bg-border sm:block" />
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold text-foreground">99.9%</span>
+              Uptime
+            </div>
           </div>
         </div>
       </div>
