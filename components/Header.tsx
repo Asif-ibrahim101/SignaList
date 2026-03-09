@@ -14,7 +14,7 @@ const Header = () => {
                         <Image
                             className="h-10 w-auto cursor-pointer"
                             alt="SignaList"
-                            src="/assets/icons/Logo.svg"
+                            src="/assets/icons/logo.svg"
                             width={180}
                             height={40}
                         />
