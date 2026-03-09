@@ -166,21 +166,21 @@ const StockDetailDashboard = ({ symbol }: { symbol: string }) => {
   if (loading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
-        <p className="text-sm text-muted-foreground">Loading {normalized}...</p>
+        <p className="text-sm text-muted-foreground uppercase font-mono tracking-wider">Loading {normalized}...</p>
       </div>
     );
   }
 
   if (error || !profile) {
     return (
-      <div className="space-y-4">
-        <Link href="/app" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><polyline points="12 19 5 12 12 5" /></svg>
-          Back to Dashboard
+      <div className="space-y-6">
+        <Link href="/app" className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground font-bold uppercase tracking-wider font-mono">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><polyline points="12 19 5 12 12 5" /></svg>
+          [ Back to Dashboard ]
         </Link>
-        <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-6 text-center">
-          <p className="text-lg font-semibold text-red-500">{error ?? 'No data available'}</p>
-          <p className="mt-1 text-sm text-muted-foreground">
+        <div className="border-2 border-destructive bg-destructive/10 p-8 text-center brutalist-shadow">
+          <p className="text-2xl font-black uppercase tracking-tight text-destructive">{error ?? 'No data available'}</p>
+          <p className="mt-3 text-sm text-muted-foreground font-medium">
             The symbol &ldquo;{normalized}&rdquo; may not be tracked yet. Try returning to the dashboard.
           </p>
         </div>
@@ -204,29 +204,29 @@ const StockDetailDashboard = ({ symbol }: { symbol: string }) => {
   return (
     <div className="space-y-6">
       {/* ── Back link ── */}
-      <Link href="/app" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><polyline points="12 19 5 12 12 5" /></svg>
-        Back to Dashboard
+      <Link href="/app" className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground font-bold uppercase tracking-wider font-mono">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><polyline points="12 19 5 12 12 5" /></svg>
+        [ Back to Dashboard ]
       </Link>
 
       {/* ── Stock header ── */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">{profile.symbol}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h1 className="text-4xl font-black uppercase tracking-tighter text-foreground">{profile.symbol}</h1>
+          <p className="mt-2 text-xs text-muted-foreground uppercase tracking-wider font-mono">
             {sourceLabel[profile.source]} &middot; Updated {formatRelativeTime(profile.updatedAt)}
           </p>
         </div>
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <p className={`text-3xl font-bold tabular-nums ${scoreTone(profile.score)}`}>
+            <p className={`text-4xl font-black tabular-nums ${scoreTone(profile.score)}`}>
               {profile.score.toFixed(1)}
             </p>
-            <p className={`text-sm font-medium ${scoreTone(profile.score)}`}>
+            <p className={`text-xs font-bold uppercase tracking-wide ${scoreTone(profile.score)}`}>
               {scoreBandLabel(profile.score)}
             </p>
           </div>
-          <div className={`h-12 w-1.5 rounded-full ${scoreBg(profile.score)}`} />
+          <div className={`h-16 w-2 ${scoreBg(profile.score)}`} />
         </div>
       </div>
 
@@ -249,46 +249,46 @@ const StockDetailDashboard = ({ symbol }: { symbol: string }) => {
 
         <div className="space-y-4">
           {/* AI narrative */}
-          <div className="rounded-xl border border-border bg-card p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">AI Summary</p>
-            <p className="mt-2 text-sm leading-relaxed text-foreground">{profile.narrative}</p>
+          <div className="border-2 border-border bg-card p-5 brutalist-shadow">
+            <p className="text-xs font-black uppercase tracking-wider text-muted-foreground">AI Summary</p>
+            <p className="mt-3 text-sm leading-relaxed text-foreground">{profile.narrative}</p>
           </div>
 
           {/* Stats grid */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">Price</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-foreground">
+            <div className="border-2 border-border bg-card p-4 brutalist-shadow">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Price</p>
+              <p className="mt-2 text-2xl font-black tabular-nums text-foreground">
                 ${profile.price.toFixed(2)}
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">Daily Change</p>
-              <p className={`mt-1 text-xl font-bold tabular-nums ${profile.changePercent >= 0 ? 'text-success' : 'text-red-500'}`}>
+            <div className="border-2 border-border bg-card p-4 brutalist-shadow">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Daily Change</p>
+              <p className={`mt-2 text-2xl font-black tabular-nums ${profile.changePercent >= 0 ? 'text-success' : 'text-red-500'}`}>
                 {profile.changePercent >= 0 ? '+' : ''}{profile.changePercent.toFixed(2)}%
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">Volume</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-foreground">
+            <div className="border-2 border-border bg-card p-4 brutalist-shadow">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Volume</p>
+              <p className="mt-2 text-2xl font-black tabular-nums text-foreground">
                 {formatCompactNumber(profile.volume)}
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">Volume Spike</p>
-              <p className={`mt-1 text-xl font-bold tabular-nums ${profile.volumeZScore >= 0 ? 'text-success' : 'text-red-500'}`}>
+            <div className="border-2 border-border bg-card p-4 brutalist-shadow">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Volume Spike</p>
+              <p className={`mt-2 text-2xl font-black tabular-nums ${profile.volumeZScore >= 0 ? 'text-success' : 'text-red-500'}`}>
                 {profile.volumeZScore >= 0 ? '+' : ''}{profile.volumeZScore.toFixed(2)}z
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">Score Move</p>
-              <p className={`mt-1 text-xl font-bold tabular-nums ${profile.scoreDelta >= 0 ? 'text-success' : 'text-red-500'}`}>
+            <div className="border-2 border-border bg-card p-4 brutalist-shadow">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Score Move</p>
+              <p className={`mt-2 text-2xl font-black tabular-nums ${profile.scoreDelta >= 0 ? 'text-success' : 'text-red-500'}`}>
                 {profile.scoreDelta >= 0 ? '+' : ''}{profile.scoreDelta.toFixed(1)} pts
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-[11px] text-muted-foreground">Confidence</p>
-              <p className="mt-1 text-xl font-bold tabular-nums text-foreground">
+            <div className="border-2 border-border bg-card p-4 brutalist-shadow">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">Confidence</p>
+              <p className="mt-2 text-2xl font-black tabular-nums text-foreground">
                 {(profile.confidence * 100).toFixed(0)}%
               </p>
             </div>
@@ -308,33 +308,33 @@ const StockDetailDashboard = ({ symbol }: { symbol: string }) => {
         />
 
         {/* Score Breakdown */}
-        <div className="rounded-xl border border-border bg-card p-4 md:p-6">
-          <h3 className="text-lg font-bold text-foreground">Score Breakdown</h3>
-          <p className="mt-1 text-xs text-muted-foreground">
+        <div className="border-2 border-border bg-card p-4 md:p-6 brutalist-shadow">
+          <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Score Breakdown</h3>
+          <p className="mt-2 text-xs text-muted-foreground uppercase tracking-wider font-mono">
             Each factor contributes positively or negatively. Longer bars mean more impact.
           </p>
 
-          <div className="mt-4 space-y-3">
+          <div className="mt-5 space-y-3">
             {profile.factors.map((factor) => {
               const absContribution = Math.abs(factor.contribution);
               const barWidth = Math.max(6, Math.min(100, absContribution * 5));
               const isPositive = factor.contribution >= 0;
 
               return (
-                <div key={factor.name} className="rounded-lg border border-border p-3">
+                <div key={factor.name} className="border-2 border-border p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-foreground">{factor.label}</span>
-                    <span className={`text-sm font-bold tabular-nums ${isPositive ? 'text-success' : 'text-red-500'}`}>
+                    <span className="text-sm font-bold text-foreground uppercase tracking-wide">{factor.label}</span>
+                    <span className={`text-sm font-black tabular-nums ${isPositive ? 'text-success' : 'text-red-500'}`}>
                       {isPositive ? '+' : ''}{factor.contribution.toFixed(1)}
                     </span>
                   </div>
-                  <div className="mt-2 h-2 rounded-full bg-muted">
+                  <div className="mt-3 h-3 bg-muted">
                     <div
-                      className={`h-2 rounded-full ${isPositive ? 'bg-success' : 'bg-red-500'}`}
+                      className={`h-3 ${isPositive ? 'bg-success' : 'bg-red-500'}`}
                       style={{ width: `${barWidth}%` }}
                     />
                   </div>
-                  <p className="mt-1 text-[11px] text-muted-foreground">
+                  <p className="mt-2 text-[10px] text-muted-foreground uppercase tracking-wider font-mono">
                     Raw score: {factor.score.toFixed(1)} &middot; Weight: {(factor.weight * 100).toFixed(0)}%
                   </p>
                 </div>
@@ -344,13 +344,13 @@ const StockDetailDashboard = ({ symbol }: { symbol: string }) => {
         </div>
 
         {/* Score Trend */}
-        <div className="rounded-xl border border-border bg-card p-4 md:p-6">
-          <h3 className="text-lg font-bold text-foreground">Score Trend</h3>
-          <p className="mt-1 text-xs text-muted-foreground">
+        <div className="border-2 border-border bg-card p-4 md:p-6 brutalist-shadow">
+          <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Score Trend</h3>
+          <p className="mt-2 text-xs text-muted-foreground uppercase tracking-wider font-mono">
             Signal strength over recent snapshots. Taller bars mean a stronger score at that time.
           </p>
 
-          <div className="mt-4">
+          <div className="mt-5">
             {history.length > 0 ? (
               <div>
                 <div className="flex h-[180px] items-end gap-1">
@@ -363,42 +363,42 @@ const StockDetailDashboard = ({ symbol }: { symbol: string }) => {
                         title={`${new Date(point.timestamp).toLocaleString()} \u00b7 Score ${point.score.toFixed(1)}`}
                       >
                         <div
-                          className={`w-full rounded-t transition-colors ${scoreBg(point.score)} group-hover:opacity-80`}
+                          className={`w-full transition-colors ${scoreBg(point.score)} group-hover:opacity-80`}
                           style={{ height: `${height}%` }}
                         />
-                        <div className="pointer-events-none absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded border border-border bg-card px-1 py-0.5 text-[9px] font-medium text-foreground opacity-0 shadow-sm transition-opacity group-hover:opacity-100">
+                        <div className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap border-2 border-border bg-card px-2 py-0.5 text-[9px] font-black text-foreground opacity-0 transition-opacity group-hover:opacity-100" style={{boxShadow: '2px 2px 0 0 var(--border)'}}>
                           {point.score.toFixed(1)}
                         </div>
                       </div>
                     );
                   })}
                 </div>
-                <div className="mt-2 flex justify-between text-[10px] text-muted-foreground">
+                <div className="mt-3 flex justify-between text-[10px] text-muted-foreground uppercase tracking-wider font-mono">
                   <span>Older</span>
                   <span>Latest</span>
                 </div>
               </div>
             ) : (
-              <div className="flex h-[180px] items-center justify-center rounded-lg border border-border bg-muted/20">
-                <p className="text-sm text-muted-foreground">No history data available yet.</p>
+              <div className="flex h-[180px] items-center justify-center border-2 border-border bg-muted/20">
+                <p className="text-sm text-muted-foreground uppercase tracking-wider font-mono">No history data available yet.</p>
               </div>
             )}
 
             {trendStats && (
               <div className="mt-4 grid grid-cols-3 gap-2">
-                <div className="rounded-lg border border-border p-2 text-center">
-                  <p className="text-[10px] text-muted-foreground">Period Change</p>
-                  <p className={`text-sm font-bold tabular-nums ${trendStats.delta >= 0 ? 'text-success' : 'text-red-500'}`}>
+                <div className="border-2 border-border p-3 text-center brutalist-shadow">
+                  <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-mono">Period Change</p>
+                  <p className={`mt-1 text-base font-black tabular-nums ${trendStats.delta >= 0 ? 'text-success' : 'text-red-500'}`}>
                     {trendStats.delta >= 0 ? '+' : ''}{trendStats.delta.toFixed(1)}
                   </p>
                 </div>
-                <div className="rounded-lg border border-border p-2 text-center">
-                  <p className="text-[10px] text-muted-foreground">High</p>
-                  <p className="text-sm font-bold tabular-nums text-foreground">{trendStats.high.toFixed(1)}</p>
+                <div className="border-2 border-border p-3 text-center brutalist-shadow">
+                  <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-mono">High</p>
+                  <p className="mt-1 text-base font-black tabular-nums text-foreground">{trendStats.high.toFixed(1)}</p>
                 </div>
-                <div className="rounded-lg border border-border p-2 text-center">
-                  <p className="text-[10px] text-muted-foreground">Low</p>
-                  <p className="text-sm font-bold tabular-nums text-foreground">{trendStats.low.toFixed(1)}</p>
+                <div className="border-2 border-border p-3 text-center brutalist-shadow">
+                  <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-mono">Low</p>
+                  <p className="mt-1 text-base font-black tabular-nums text-foreground">{trendStats.low.toFixed(1)}</p>
                 </div>
               </div>
             )}
