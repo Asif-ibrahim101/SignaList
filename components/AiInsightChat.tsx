@@ -191,6 +191,12 @@ const AiInsightChat = () => {
               <input
                 value={question}
                 onChange={(event) => setQuestion(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' && !loading && cooldownSeconds === 0) {
+                    event.preventDefault();
+                    void handleSend();
+                  }
+                }}
                 className="h-9 flex-1 rounded-xl border border-border bg-background px-3 text-xs text-foreground"
                 placeholder="Ask for risks, valuation, catalysts..."
               />

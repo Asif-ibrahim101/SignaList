@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type AlertMetricField = 'score' | 'scoreDelta' | 'sentiment' | 'volumeZScore' | 'confidence' | 'changePercent';
 type AlertMetricOperator = '>' | '>=' | '<' | '<=' | '==';
@@ -135,7 +135,10 @@ const CompositeAlertsPanel = () => {
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const nameInputRef = useRef<HTMLInputElement>(null);
 
   const [name, setName] = useState('Momentum + News Breakout');
   const [symbolsInput, setSymbolsInput] = useState('AAPL,NVDA,MSFT');
@@ -187,6 +190,12 @@ const CompositeAlertsPanel = () => {
     void refreshRules();
     void refreshHistory();
   }, [refreshHistory, refreshRules]);
+
+  useEffect(() => {
+    if (activeTab === 'create' && nameInputRef.current) {
+      nameInputRef.current.focus();
+    }
+  }, [activeTab]);
 
   const addCondition = () => {
     setConditions((current) => [...current, emptyCondition()]);
@@ -259,6 +268,8 @@ const CompositeAlertsPanel = () => {
       setCooldownMinutes(120);
 
       await Promise.all([refreshRules(), refreshHistory()]);
+      setSuccessMessage('Alert rule created successfully!');
+      setTimeout(() => setSuccessMessage(null), 3000);
       setActiveTab('rules');
     } catch (submitErr) {
       setSubmitError(submitErr instanceof Error ? submitErr.message : 'Failed to create alert rule.');
@@ -337,6 +348,13 @@ const CompositeAlertsPanel = () => {
         </p>
       </div>
 
+      {/* Success Message */}
+      {successMessage && (
+        <div className="mx-4 mt-4 md:mx-6 animate-in fade-in slide-in-from-top-2 rounded-lg border border-success/40 bg-success/10 p-3">
+          <p className="text-sm font-medium text-success">{successMessage}</p>
+        </div>
+      )}
+
       {/* Tabs */}
       <div className="mt-4 flex shrink-0 border-b border-border px-4 md:px-6">
         {tabs.map((tab) => (
@@ -405,6 +423,7 @@ const CompositeAlertsPanel = () => {
                   Rule name
                 </label>
                 <input
+                  ref={nameInputRef}
                   id="alert-name"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
@@ -565,7 +584,7 @@ const CompositeAlertsPanel = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="h-10 w-full rounded-md bg-yellow-500 px-3 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-60"
+                className="h-10 w-full rounded-md bg-yellow-500 px-3 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Creating...' : 'Create Alert Rule'}
               </button>
