@@ -321,46 +321,43 @@ const CompositeAlertsPanel = () => {
   ];
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-border bg-card">
+    <div className="flex h-full flex-col border-2 border-border bg-card brutalist-shadow">
       {/* Header */}
-      <div className="shrink-0 p-4 pb-0 md:p-6 md:pb-0">
+      <div className="shrink-0 p-4 pb-0 md:p-6 md:pb-0 border-b-2 border-border">
         <div className="flex items-center justify-between gap-2">
-          <h3 className="text-xl font-bold text-foreground">Smart Alerts</h3>
+          <h3 className="text-xl font-black uppercase tracking-tight text-foreground">Smart Alerts</h3>
           {totalActiveRules > 0 && (
-            <span className="rounded-full border border-success/40 bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
-              {totalActiveRules} active
+            <span className="border-2 border-success bg-success/10 px-3 py-1 text-xs font-bold uppercase tracking-wider font-mono text-success">
+              {totalActiveRules} Active
             </span>
           )}
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Get notified when your signal conditions are met. Pick a template or build a custom rule.
+        <p className="mt-2 text-sm font-medium text-muted-foreground">
+          Automated notifications when signal thresholds are breached.
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="mt-4 flex shrink-0 border-b border-border px-4 md:px-6">
+      <div className="mt-4 flex shrink-0 border-b-2 border-border px-4 md:px-6 bg-border gap-px">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`relative px-3 py-2.5 text-sm font-medium transition-colors ${
+            className={`px-4 py-3 text-sm font-bold uppercase tracking-wider transition-colors font-mono ${
               activeTab === tab.key
-                ? 'text-yellow-500'
-                : 'text-muted-foreground hover:text-foreground'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-card text-muted-foreground hover:bg-foreground hover:text-background'
             }`}
           >
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-2">
               {tab.label}
               {tab.badge !== undefined && tab.badge > 0 && (
-                <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-muted px-1 text-[10px] font-semibold text-muted-foreground">
+                <span className="inline-flex h-5 min-w-5 items-center justify-center border border-current px-1.5 text-[10px] font-black">
                   {tab.badge}
                 </span>
               )}
             </span>
-            {activeTab === tab.key && (
-              <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-yellow-500" />
-            )}
           </button>
         ))}
       </div>
@@ -401,14 +398,14 @@ const CompositeAlertsPanel = () => {
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="alert-name" className="text-xs font-medium text-muted-foreground">
-                  Rule name
+                <label htmlFor="alert-name" className="text-xs font-bold uppercase tracking-wider text-muted-foreground font-mono">
+                  Rule Name
                 </label>
                 <input
                   id="alert-name"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  className="mt-1 h-9 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground/60"
+                  className="mt-2 h-10 w-full border-2 border-border bg-background px-3 text-sm font-medium text-foreground placeholder:text-muted-foreground/60 transition-colors focus:border-primary focus:outline-none"
                   placeholder="e.g. High conviction breakout"
                   required
                 />
@@ -565,7 +562,7 @@ const CompositeAlertsPanel = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="h-10 w-full rounded-md bg-yellow-500 px-3 text-sm font-semibold text-gray-900 transition-colors hover:bg-yellow-400 disabled:opacity-60"
+                className="h-12 w-full border-2 border-primary bg-primary px-3 text-sm font-black uppercase tracking-tight text-primary-foreground transition-all hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-60 brutalist-shadow-sm hover:shadow-[2px_2px_0_0_var(--border)]"
               >
                 {isSubmitting ? 'Creating...' : 'Create Alert Rule'}
               </button>
