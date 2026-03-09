@@ -1,6 +1,7 @@
 'use client'
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import Link from 'next/link';
 import TradingViewWidget from '@/components/TradingViewWidget';
 import HeatmapSwitcher from '@/components/HeatmapSwitcher';
 import SignalLeaderboard from '@/components/SignalLeaderboard';
@@ -17,6 +18,14 @@ const HomeDashboard = () => {
   const { theme } = useTheme();
   const widgetTheme = theme === 'dark' ? 'dark' : 'light';
   const scriptUrl = 'https://s3.tradingview.com/external-embedding/embed-widget-';
+  const [greeting, setGreeting] = useState('');
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) setGreeting('Good Morning');
+    else if (hour < 18) setGreeting('Good Afternoon');
+    else setGreeting('Good Evening');
+  }, []);
 
   const withWidgetTheme = useMemo(() => {
     const backgroundColor = widgetTheme === 'dark' ? '#141414' : '#FFFFFF';
@@ -31,15 +40,74 @@ const HomeDashboard = () => {
     });
   }, [widgetTheme]);
 
+  const quickActions = [
+    { label: 'Browse Signals', href: '/app/signals', icon: '📊' },
+    { label: 'Market News', href: '/app/news', icon: '📰' },
+    { label: 'Create Alert', href: '#', icon: '🔔', action: 'scroll-to-alerts' },
+    { label: 'AI Assistant', href: '#', icon: '🤖', action: 'scroll-to-ai' },
+  ];
+
   return (
     <div className="flex home-wrapper min-h-screen">
-      <section className="grid gap-8 home-section w-full">
+      {/* Dashboard Header */}
+      <section className="grid gap-6 home-section w-full">
         <div className="md:col-span-2 xl:col-span-3">
+          <div className="border-2 border-border bg-card p-6 brutalist-shadow">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <h1 className="text-3xl font-black uppercase tracking-tighter text-foreground">
+                  {greeting}
+                </h1>
+                <p className="mt-1 text-xs text-muted-foreground uppercase tracking-wider font-mono">
+                  Your market intelligence dashboard
+                </p>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="flex flex-wrap gap-2">
+                {quickActions.map((action) => (
+                  action.href === '#' ? (
+                    <button
+                      key={action.label}
+                      className="inline-flex items-center gap-2 border-2 border-border bg-background px-4 py-2 text-xs font-black uppercase tracking-wide text-foreground transition-colors hover:bg-foreground hover:text-background"
+                      style={{boxShadow: '3px 3px 0 0 var(--border)'}}
+                    >
+                      <span>{action.icon}</span>
+                      <span>{action.label}</span>
+                    </button>
+                  ) : (
+                    <Link
+                      key={action.label}
+                      href={action.href}
+                      className="inline-flex items-center gap-2 border-2 border-border bg-background px-4 py-2 text-xs font-black uppercase tracking-wide text-foreground transition-colors hover:bg-foreground hover:text-background"
+                      style={{boxShadow: '3px 3px 0 0 var(--border)'}}
+                    >
+                      <span>{action.icon}</span>
+                      <span>{action.label}</span>
+                    </Link>
+                  )
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Market Overview Section */}
+        <div className="md:col-span-2 xl:col-span-3">
+          <div className="mb-4">
+            <h2 className="text-xl font-black uppercase tracking-tight text-foreground">Market Overview</h2>
+            <div className="mt-1 h-1 w-20 bg-primary"></div>
+          </div>
           <HeatmapSwitcher scriptBaseUrl={scriptUrl} theme={widgetTheme} />
         </div>
       </section>
 
+      {/* Signals & Alerts Section */}
       <section className="grid w-full gap-8 home-section auto-rows-[minmax(700px,1fr)]">
+        <div className="md:col-span-2 xl:col-span-3 mb-4">
+          <h2 className="text-xl font-black uppercase tracking-tight text-foreground">Signals & Alerts</h2>
+          <div className="mt-1 h-1 w-20 bg-primary"></div>
+        </div>
         <div className="md:col-span-2 xl:col-span-2">
           <SignalLeaderboard />
         </div>
@@ -48,7 +116,12 @@ const HomeDashboard = () => {
         </div>
       </section>
 
+      {/* Market Data Section */}
       <section className="grid w-full gap-8 home-section">
+        <div className="md:col-span-2 xl:col-span-3 mb-4">
+          <h2 className="text-xl font-black uppercase tracking-tight text-foreground">Market Data & Analysis</h2>
+          <div className="mt-1 h-1 w-20 bg-primary"></div>
+        </div>
         <div className="h-full md:col-span-1 xl:col-span-1">
           <TradingViewWidget
             title="Top Movers"
