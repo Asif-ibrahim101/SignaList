@@ -16,7 +16,7 @@ export default function AppNotFound() {
         {/* Message */}
         <div className="border-2 border-border bg-card p-6 brutalist-shadow">
           <p className="text-sm text-foreground">
-            This dashboard page doesn't exist. Check the URL or return to your dashboard.
+            This dashboard page doesn&apos;t exist. Check the URL or return to your dashboard.
           </p>
         </div>
 

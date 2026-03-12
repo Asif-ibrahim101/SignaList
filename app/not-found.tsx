@@ -16,7 +16,7 @@ export default function NotFound() {
         {/* Message */}
         <div className="border-2 border-border bg-card p-8 brutalist-shadow">
           <p className="text-base text-foreground">
-            The page you're looking for doesn't exist or has been moved.
+            The page you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
         </div>
 

@@ -55,16 +55,6 @@ const sentimentOptions = [
   { value: 'bearish', label: 'Bearish' },
 ];
 
-const categoryGradients: Record<string, string> = {
-  technology: 'from-blue-600/40 to-blue-900/60',
-  finance: 'from-emerald-600/40 to-emerald-900/60',
-  energy: 'from-amber-600/40 to-amber-900/60',
-  healthcare: 'from-rose-600/40 to-rose-900/60',
-  consumer_goods: 'from-purple-600/40 to-purple-900/60',
-  economy: 'from-cyan-600/40 to-cyan-900/60',
-  general: 'from-gray-600/40 to-gray-900/60',
-};
-
 const formatRelativeTime = (isoDate: string) => {
   const timestamp = new Date(isoDate).getTime();
   if (!Number.isFinite(timestamp)) return 'Unknown';

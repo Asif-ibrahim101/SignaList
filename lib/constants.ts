@@ -1,4 +1,4 @@
-export const NAVITEMS = [
+export const NAVITEMS: { href: string; label: string }[] = [
     // { href: '/watchlist', label: 'Watchlist' },
 ];
 
