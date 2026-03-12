@@ -64,7 +64,7 @@ const HomeDashboard = () => {
               </div>
 
               {/* Quick Actions */}
-              <div className="flex flex-wrap gap-2">
+              <div id="tour-quick-actions" className="flex flex-wrap gap-2">
                 {quickActions.map((action) => (
                   action.href === '#' ? (
                     <button
@@ -98,7 +98,9 @@ const HomeDashboard = () => {
             <h2 className="text-xl font-black uppercase tracking-tight text-foreground">Market Overview</h2>
             <div className="mt-1 h-1 w-20 bg-primary"></div>
           </div>
-          <HeatmapSwitcher scriptBaseUrl={scriptUrl} theme={widgetTheme} />
+          <div id="tour-heatmap">
+            <HeatmapSwitcher scriptBaseUrl={scriptUrl} theme={widgetTheme} />
+          </div>
         </div>
       </section>
 
@@ -108,10 +110,10 @@ const HomeDashboard = () => {
           <h2 className="text-xl font-black uppercase tracking-tight text-foreground">Signals & Alerts</h2>
           <div className="mt-1 h-1 w-20 bg-primary"></div>
         </div>
-        <div className="md:col-span-2 xl:col-span-2">
+        <div id="tour-signals" className="md:col-span-2 xl:col-span-2">
           <SignalLeaderboard />
         </div>
-        <div className="md:col-span-1 xl:col-span-1">
+        <div id="tour-alerts" className="md:col-span-1 xl:col-span-1">
           <CompositeAlertsPanel />
         </div>
       </section>

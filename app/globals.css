@@ -683,3 +683,74 @@
     margin: 0 !important;
     padding: 0 !important;
 }
+
+/* Driver.js Onboarding Tour Theme */
+.signalist-tour-popover.driver-popover {
+    background-color: var(--card) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 0 !important;
+    color: var(--foreground) !important;
+    box-shadow: 6px 6px 0 0 var(--border) !important;
+}
+
+.signalist-tour-popover .driver-popover-title {
+    color: var(--foreground) !important;
+    font-size: 1rem !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: -0.025em !important;
+}
+
+.signalist-tour-popover .driver-popover-description {
+    color: var(--muted-foreground) !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.5 !important;
+}
+
+.signalist-tour-popover .driver-popover-progress-text {
+    color: var(--muted-foreground) !important;
+    font-size: 0.75rem !important;
+}
+
+.signalist-tour-popover .driver-popover-next-btn,
+.signalist-tour-popover .driver-popover-close-btn {
+    background-color: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.05em !important;
+    text-shadow: none !important;
+}
+
+.signalist-tour-popover .driver-popover-next-btn:hover,
+.signalist-tour-popover .driver-popover-close-btn:hover {
+    background-color: var(--foreground) !important;
+    color: var(--background) !important;
+}
+
+.signalist-tour-popover .driver-popover-prev-btn {
+    background-color: transparent !important;
+    color: var(--muted-foreground) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 0 !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.05em !important;
+    text-shadow: none !important;
+}
+
+.signalist-tour-popover .driver-popover-prev-btn:hover {
+    background-color: var(--muted) !important;
+    color: var(--foreground) !important;
+}
+
+.signalist-tour-popover .driver-popover-arrow-side-left .driver-popover-arrow,
+.signalist-tour-popover .driver-popover-arrow-side-right .driver-popover-arrow,
+.signalist-tour-popover .driver-popover-arrow-side-top .driver-popover-arrow,
+.signalist-tour-popover .driver-popover-arrow-side-bottom .driver-popover-arrow {
+    border-color: var(--border) !important;
+}

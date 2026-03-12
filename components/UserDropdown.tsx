@@ -13,8 +13,9 @@ import {
 import NavItems from "@/components/NavItems";
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
-import { LogOut } from 'lucide-react';
+import { LogOut, HelpCircle } from 'lucide-react';
 import Link from "next/link";
+import { TOUR_RESTART_EVENT } from '@/components/OnboardingTour';
 
 const UserDropdown = () => {
     const router = useRouter();
@@ -106,6 +107,13 @@ const UserDropdown = () => {
                         <Link href="/app/profile" className="w-full text-foreground">
                             Profile
                         </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        onClick={() => window.dispatchEvent(new CustomEvent(TOUR_RESTART_EVENT))}
+                        className="text-foreground text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer"
+                    >
+                        <HelpCircle className="h-4 w-4 mr-2 hidden sm:block" />
+                        Restart Tour
                     </DropdownMenuItem>
                     <DropdownMenuSeparator className="bg-border"/>
                     <DropdownMenuItem onClick={handle_Signout} className="text-foreground text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">

@@ -221,6 +221,7 @@ const AiInsightChat = () => {
       )}
 
       <Button
+        id="tour-ai-chat"
         type="button"
         size="icon-lg"
         onClick={() => setOpen((prev) => !prev)}

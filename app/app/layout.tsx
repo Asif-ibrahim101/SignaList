@@ -2,6 +2,7 @@ import React from "react";
 import Header from "@/components/Header";
 import TickerTapeWidget from "@/components/TickerTapeWidget";
 import AiInsightChat from "@/components/AiInsightChat";
+import OnboardingTour from "@/components/OnboardingTour";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getUserFromSession } from "@/lib/session";
@@ -25,6 +26,7 @@ const Layout = async ({children} : {children: React.ReactNode}) => {
                 {children}
             </div>
             <AiInsightChat />
+            <OnboardingTour />
         </main>
     );
 };

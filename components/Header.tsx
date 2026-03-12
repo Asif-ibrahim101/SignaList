@@ -25,7 +25,7 @@ const Header = () => {
                     </nav>
 
                     <div className="flex items-center gap-2">
-                        <div className="hidden sm:block">
+                        <div id="tour-search" className="hidden sm:block">
                             <NavSearch />
                         </div>
                         <Link
