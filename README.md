@@ -56,7 +56,7 @@ A real-time stock market intelligence platform that combines multi-provider fina
 
 | Category | Technology |
 |----------|-----------|
-| **Framework** | Next.js 15 (App Router, Turbopack) |
+| **Framework** | Next.js 16 (App Router, Turbopack) |
 | **Language** | TypeScript |
 | **Frontend** | React 19, Tailwind CSS 4 |
 | **UI Components** | Radix UI, Lucide Icons |
