@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -8,11 +8,30 @@ import { Button } from "@/components/ui/button";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data?.user ?? null);
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href={user ? "/app" : "/"} className="flex items-center gap-3">
           <Image
             src="/assets/icons/logo.svg"
             alt="SignaList"
@@ -38,12 +57,22 @@ export const Navbar = () => {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/sign-in">Log In</Link>
-          </Button>
-          <Button variant="hero" size="sm" asChild>
-            <Link href="/sign-up">Get Started</Link>
-          </Button>
+          {loading ? (
+            <div className="h-9 w-24 animate-pulse bg-muted rounded"></div>
+          ) : user ? (
+            <Button variant="hero" size="sm" asChild>
+              <Link href="/app">Dashboard</Link>
+            </Button>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/sign-in">Log In</Link>
+              </Button>
+              <Button variant="hero" size="sm" asChild>
+                <Link href="/sign-up">Get Started</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -72,12 +101,20 @@ export const Navbar = () => {
               About
             </a>
             <div className="flex gap-3 pt-2">
-              <Button variant="ghost" size="sm" className="flex-1" asChild>
-                <Link href="/sign-in">Log In</Link>
-              </Button>
-              <Button variant="hero" size="sm" className="flex-1" asChild>
-                <Link href="/sign-up">Get Started</Link>
-              </Button>
+              {user ? (
+                <Button variant="hero" size="sm" className="flex-1" asChild>
+                  <Link href="/app">Dashboard</Link>
+                </Button>
+              ) : (
+                <>
+                  <Button variant="ghost" size="sm" className="flex-1" asChild>
+                    <Link href="/sign-in">Log In</Link>
+                  </Button>
+                  <Button variant="hero" size="sm" className="flex-1" asChild>
+                    <Link href="/sign-up">Get Started</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>

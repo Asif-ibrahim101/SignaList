@@ -10,7 +10,7 @@ const Header = () => {
         <>
             <header className="sticky top-0 z-50 bg-background border-b-2 border-border">
                 <div className="container flex justify-between items-center px-6 py-4">
-                    <Link href="/" className="transition-transform hover:scale-105">
+                    <Link href="/app" className="transition-transform hover:scale-105">
                         <Image
                             className="h-10 w-auto cursor-pointer"
                             alt="SignaList"
