@@ -70,7 +70,7 @@ const HomeDashboard = () => {
                     <button
                       key={action.label}
                       className="inline-flex items-center gap-2 border-2 border-border bg-background px-4 py-2 text-xs font-black uppercase tracking-wide text-foreground transition-colors hover:bg-foreground hover:text-background"
-                      style={{boxShadow: '3px 3px 0 0 var(--border)'}}
+                      style={{ boxShadow: '3px 3px 0 0 var(--border)' }}
                     >
                       <span>{action.icon}</span>
                       <span>{action.label}</span>
@@ -80,7 +80,7 @@ const HomeDashboard = () => {
                       key={action.label}
                       href={action.href}
                       className="inline-flex items-center gap-2 border-2 border-border bg-background px-4 py-2 text-xs font-black uppercase tracking-wide text-foreground transition-colors hover:bg-foreground hover:text-background"
-                      style={{boxShadow: '3px 3px 0 0 var(--border)'}}
+                      style={{ boxShadow: '3px 3px 0 0 var(--border)' }}
                     >
                       <span>{action.icon}</span>
                       <span>{action.label}</span>
@@ -105,7 +105,7 @@ const HomeDashboard = () => {
       </section>
 
       {/* Signals & Alerts Section */}
-      <section className="grid w-full gap-8 home-section auto-rows-[minmax(700px,1fr)]">
+      <section className="grid w-full gap-8 home-section">
         <div className="md:col-span-2 xl:col-span-3 mb-4">
           <h2 className="text-xl font-black uppercase tracking-tight text-foreground">Signals & Alerts</h2>
           <div className="mt-1 h-1 w-20 bg-primary"></div>
