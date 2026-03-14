@@ -15,7 +15,7 @@ export const Footer = () => {
           <div className="lg:col-span-2">
             <div className="mb-4 flex items-center gap-2">
               <Image
-                src="/assets/icons/Logo.svg"
+                src="/assets/icons/logo.svg"
                 alt="SignaList"
                 width={210}
                 height={48}
