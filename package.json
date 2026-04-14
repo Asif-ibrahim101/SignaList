@@ -34,6 +34,7 @@
     "react-hook-form": "^7.67.0",
     "react-markdown": "^10.1.0",
     "react-select-country-list": "^2.2.3",
+    "resend": "^6.11.0",
     "tailwind-merge": "^3.3.1",
     "yahoo-finance2": "^3.13.0"
   },

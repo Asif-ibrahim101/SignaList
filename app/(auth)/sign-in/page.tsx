@@ -8,6 +8,7 @@ import FooterLink from '@/components/Forms/FooterLinks';
 // import {signInWithEmail, signUpWithEmail} from "@/lib/actions/auth.actions";
 // import {toast} from "sonner";
 // import {signInEmail} from "better-auth/api";
+import Link from 'next/link';
 import {useRouter} from "next/navigation";
 import { useState } from "react";
 
@@ -67,6 +68,12 @@ const SignIn = () => {
                     error={errors.password}
                     validation={{ required: 'Password is required', minLength: 8 }}
                 />
+
+                <div className="text-right">
+                    <Link href="/forgot-password" className="text-sm text-muted-foreground hover:text-yellow-500 transition-colors">
+                        Forgot password?
+                    </Link>
+                </div>
 
                 <Button type="submit" disabled={isSubmitting} className="yellow-btn w-full mt-5">
                     {isSubmitting ? 'Signing In' : 'Sign In'}

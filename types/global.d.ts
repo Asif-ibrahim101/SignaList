@@ -5,6 +5,15 @@ declare global {
         password: string;
     };
 
+    type ForgotPasswordFormData = {
+        email: string;
+    };
+
+    type ResetPasswordFormData = {
+        password: string;
+        confirmPassword: string;
+    };
+
     type SignUpFormData = {
         fullName: string;
         email: string;
